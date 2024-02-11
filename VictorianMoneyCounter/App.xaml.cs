@@ -23,12 +23,13 @@ public partial class App : Application
                 //services.AddGenericFactory<Wallet>();
                 
                 services.AddSingleton<MainWindow>();
+                services.AddFormFactory<ChildWindow>(); // Child Window is essentially the same as MainWindow
                 
-                services.AddTransient<MainPageViewModel>();
-                services.AddGenericFactory<MainPage>();
+                services.AddTransient<WalletPageViewModel>();
+                services.AddGenericFactory<WalletPage>(); // Factory for WalletPage so multiple wallet views can be displayed
 
                 services.AddTransient<DenominationRowViewModel>();
-                services.AddGenericFactory<DenominationRow>();
+                services.AddGenericFactory<DenominationRow>(); // Factory for Denomination Row as many will be needed
                 //services.AddTransient<IDataAccess, DataAccess>();
             })
             .Build();

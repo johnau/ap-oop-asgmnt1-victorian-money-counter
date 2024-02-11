@@ -52,6 +52,8 @@ D:\tafe\c# oop\portfolio\Session 1\Victorian Money Counter Task\VictorianMoneyCo
 D:\tafe\c# oop\portfolio\Session 1\Victorian Money Counter Task\VictorianMoneyCounter\VictorianMoneyCounter\obj\Debug\net8.0-windows\Views\DenominationRow.g.cs
 D:\tafe\c# oop\portfolio\Session 1\Victorian Money Counter Task\VictorianMoneyCounter\VictorianMoneyCounter\obj\Debug\net8.0-windows\Views\DenominationRow.baml
 D:\tafe\c# oop\portfolio\Session 1\Victorian Money Counter Task\VictorianMoneyCounter\VictorianMoneyCounter\obj\Debug\net8.0-windows\MainWindow.g.cs
-D:\tafe\c# oop\portfolio\Session 1\Victorian Money Counter Task\VictorianMoneyCounter\VictorianMoneyCounter\obj\Debug\net8.0-windows\Views\MainPage.g.cs
 D:\tafe\c# oop\portfolio\Session 1\Victorian Money Counter Task\VictorianMoneyCounter\VictorianMoneyCounter\obj\Debug\net8.0-windows\MainWindow.baml
-D:\tafe\c# oop\portfolio\Session 1\Victorian Money Counter Task\VictorianMoneyCounter\VictorianMoneyCounter\obj\Debug\net8.0-windows\Views\MainPage.baml
+D:\tafe\c# oop\portfolio\Session 1\Victorian Money Counter Task\VictorianMoneyCounter\VictorianMoneyCounter\obj\Debug\net8.0-windows\Views\WalletPage.g.cs
+D:\tafe\c# oop\portfolio\Session 1\Victorian Money Counter Task\VictorianMoneyCounter\VictorianMoneyCounter\obj\Debug\net8.0-windows\Views\WalletPage.baml
+D:\tafe\c# oop\portfolio\Session 1\Victorian Money Counter Task\VictorianMoneyCounter\VictorianMoneyCounter\obj\Debug\net8.0-windows\ChildWindow.g.cs
+D:\tafe\c# oop\portfolio\Session 1\Victorian Money Counter Task\VictorianMoneyCounter\VictorianMoneyCounter\obj\Debug\net8.0-windows\ChildWindow.baml

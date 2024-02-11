@@ -7,21 +7,27 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
+    <Compile Update="ChildWindow.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Views\DenominationRow.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Views\MainPage.xaml.cs">
+    <Compile Update="Views\WalletPage.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Page Update="ChildWindow.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="Views\DenominationRow.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="MainWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Views\MainPage.xaml">
+    <Page Update="Views\WalletPage.xaml">
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>

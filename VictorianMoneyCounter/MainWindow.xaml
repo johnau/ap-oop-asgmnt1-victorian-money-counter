@@ -6,6 +6,6 @@
         xmlns:local="clr-namespace:VictorianMoneyCounter"
         xmlns:views="clr-namespace:VictorianMoneyCounter.Views"
         mc:Ignorable="d"
-        Title="MainWindow" MinHeight="840" MinWidth="600" Height="800" Width="600">
+        Title="Victorian Money Counter" MinHeight="740" MinWidth="600" Height="840" Width="750">
     <!--<views:MainPage Grid.Row="1"/>-->
 </Window>

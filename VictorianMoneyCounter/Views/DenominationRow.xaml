@@ -4,15 +4,17 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:VictorianMoneyCounter.Views"
+             xmlns:vm="clr-namespace:VictorianMoneyCounter.ViewModels"
              mc:Ignorable="d" 
+             d:DataContext="{d:DesignInstance Type=vm:DenominationRowViewModel}"
              d:DesignHeight="100" d:DesignWidth="800">
     <UserControl.Resources>
-        <Style x:Key="ImageButton" TargetType="Button">
+        <!--<Style x:Key="ImageButton" TargetType="Button">
             <Setter Property="Background" Value="Transparent" />
             <Setter Property="BorderThickness" Value="0" />
             <Setter Property="Padding" Value="25" />
 
-            <!--<Setter Property="Template">
+            --><!--<Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type Button}">
                         <Border Background="{TemplateBinding Background}" BorderThickness="0" Padding="25">
@@ -25,15 +27,53 @@
                 <Trigger Property="IsMouseOver" Value="True">
                     <Setter Property="Background" Value="Transparent"/>
                 </Trigger>
-            </Style.Triggers>-->
+            </Style.Triggers>--><!--
+        </Style>-->
+        <Style TargetType="Button">
+            <Setter Property="Margin" Value="0 0 0 2" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="FontWeight" Value="ExtraBold" />
         </Style>
-        <Style x:Key="BoldButton" TargetType="Button">
+        <Style x:Key="MoveDownButton" TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+            <Setter Property="Padding" Value="25" />
+            <Setter Property="Content">
+                <Setter.Value>
+                    <Image Source="pack://application:,,,/VictorianMoneyCounter;component\Assets\ButtonImages\downArrowEnabled.png" />
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsEnabled" Value="False">
+                    <Setter Property="Content">
+                        <Setter.Value>
+                            <Image Source="pack://application:,,,/VictorianMoneyCounter;component\Assets\ButtonImages\downArrowDisabled.png" />
+                        </Setter.Value>
+                    </Setter>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        <Style x:Key="MoveUpButton" TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+            <Setter Property="Padding" Value="25" />
+            <Setter Property="Content">
+                <Setter.Value>
+                    <Image Source="pack://application:,,,/VictorianMoneyCounter;component\Assets\ButtonImages\upArrowEnabled.png" />
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsEnabled" Value="False">
+                    <Setter Property="Content">
+                        <Setter.Value>
+                            <Image Source="pack://application:,,,/VictorianMoneyCounter;component\Assets\ButtonImages\upArrowDisabled.png" />
+                        </Setter.Value>
+                    </Setter>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        <Style x:Key="BoldButton" TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
             <Setter Property="FontSize" Value="60" />
             <Setter Property="Padding" Value="0 -5 0 0" />
-            <Setter Property="FontWeight" Value="ExtraBold" />
-            <Setter Property="Background" Value="Transparent" />
-            <Setter Property="BorderThickness" Value="0" />
         </Style>
+        
         <Style x:Key="LargeText" TargetType="TextBlock">
             <Setter Property="FontSize" Value="50" />
             <Setter Property="HorizontalAlignment" Value="Center" />
@@ -42,9 +82,13 @@
             <Setter Property="FontSize" Value="20" />
             <Setter Property="HorizontalAlignment" Value="Center" />
         </Style>
+        <BooleanToVisibilityConverter x:Key="BoolToVisConverter"/>
     </UserControl.Resources>
 
-    <Border BorderBrush="Black" BorderThickness="2 1 2 1">
+    <Border 
+        BorderBrush="Black" 
+        BorderThickness="4 0 4 4" 
+        ClipToBounds="True" >
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition MaxWidth="100" MinWidth="30" />
@@ -53,18 +97,49 @@
                 <ColumnDefinition MaxWidth="100" MinWidth="30"/>
                 <ColumnDefinition MaxWidth="100" MinWidth="30"/>
             </Grid.ColumnDefinitions>
-            <Button Content="－" Grid.Column="0" Style="{StaticResource BoldButton}"/>
-            <Button Grid.Column="1" Style="{StaticResource ImageButton}">
+            <Button 
+                Content="－" 
+                Grid.Column="0" 
+                Style="{StaticResource BoldButton}"
+                Command="{Binding DecreaseByOneCommand}"
+                />
+            <!--
+            <Button Grid.Column="1" Style="{StaticResource ImageButton}" Visibility="{Binding Show_ExchangeDown, Converter={StaticResource BoolToVisConverter}, ConverterParameter=Hidden}">
                 <Image Source="pack://application:,,,/VictorianMoneyCounter;component\Assets\ButtonImages\downArrowEnabled.png" />
             </Button>
-            <StackPanel Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center">
-                <TextBlock Text="0" Style="{StaticResource LargeText}" />
-                <TextBlock Text="Denomination" Style="{StaticResource SmallText}" />
+            -->
+            <Button 
+                Grid.Column="1" 
+                Style="{StaticResource MoveDownButton}" 
+                Visibility="{Binding Use_ExchangeDown, Converter={StaticResource BoolToVisConverter}, ConverterParameter=Hidden}" 
+                Command="{Binding MoveDownCommand}" />
+            <StackPanel 
+                Grid.Column="2" 
+                HorizontalAlignment="Center" 
+                VerticalAlignment="Center" >
+                <TextBlock 
+                    Style="{StaticResource LargeText}"
+                    Text="{Binding Quantity, FallbackValue='X'}" />
+                <TextBlock 
+                    Style="{StaticResource SmallText}" 
+                    Text="{Binding Label, FallbackValue='denomination'}" />
             </StackPanel>
-            <Button Grid.Column="3" Style="{StaticResource ImageButton}">
+            <!--
+            <Button Grid.Column="3" Style="{StaticResource ImageButton}" Visibility="{Binding Show_ExchangeUp, Converter={StaticResource BoolToVisConverter}, ConverterParameter=Hidden}">
                 <Image Source="pack://application:,,,/VictorianMoneyCounter;component\Assets\ButtonImages\upArrowEnabled.png" />
             </Button>
-            <Button Content="＋" Grid.Column="4" Style="{StaticResource BoldButton}"/>
+            -->
+            <Button 
+                Grid.Column="3" 
+                Style="{StaticResource MoveUpButton}" 
+                Visibility="{Binding Use_ExchangeUp, Converter={StaticResource BoolToVisConverter}, ConverterParameter=Hidden}" 
+                Command="{Binding MoveUpCommand}" />
+            <Button 
+                Content="＋" 
+                Grid.Column="4" 
+                Style="{StaticResource BoldButton}"
+                Command="{Binding IncreaseByOneCommand}"
+                />
         </Grid>
     </Border>
 

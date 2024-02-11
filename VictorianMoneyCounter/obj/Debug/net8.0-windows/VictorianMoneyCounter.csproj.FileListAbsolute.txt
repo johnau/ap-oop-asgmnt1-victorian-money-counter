@@ -34,11 +34,9 @@ D:\tafe\c# oop\portfolio\Session 1\Victorian Money Counter Task\VictorianMoneyCo
 D:\tafe\c# oop\portfolio\Session 1\Victorian Money Counter Task\VictorianMoneyCounter\VictorianMoneyCounter\bin\Debug\net8.0-windows\System.Diagnostics.EventLog.dll
 D:\tafe\c# oop\portfolio\Session 1\Victorian Money Counter Task\VictorianMoneyCounter\VictorianMoneyCounter\bin\Debug\net8.0-windows\runtimes\win\lib\net8.0\System.Diagnostics.EventLog.dll
 D:\tafe\c# oop\portfolio\Session 1\Victorian Money Counter Task\VictorianMoneyCounter\VictorianMoneyCounter\obj\Debug\net8.0-windows\VictorianMoneyCounter.csproj.AssemblyReference.cache
-D:\tafe\c# oop\portfolio\Session 1\Victorian Money Counter Task\VictorianMoneyCounter\VictorianMoneyCounter\obj\Debug\net8.0-windows\MainWindow.g.cs
 D:\tafe\c# oop\portfolio\Session 1\Victorian Money Counter Task\VictorianMoneyCounter\VictorianMoneyCounter\obj\Debug\net8.0-windows\App.g.cs
 D:\tafe\c# oop\portfolio\Session 1\Victorian Money Counter Task\VictorianMoneyCounter\VictorianMoneyCounter\obj\Debug\net8.0-windows\VictorianMoneyCounter_MarkupCompile.cache
 D:\tafe\c# oop\portfolio\Session 1\Victorian Money Counter Task\VictorianMoneyCounter\VictorianMoneyCounter\obj\Debug\net8.0-windows\VictorianMoneyCounter_MarkupCompile.lref
-D:\tafe\c# oop\portfolio\Session 1\Victorian Money Counter Task\VictorianMoneyCounter\VictorianMoneyCounter\obj\Debug\net8.0-windows\MainWindow.baml
 D:\tafe\c# oop\portfolio\Session 1\Victorian Money Counter Task\VictorianMoneyCounter\VictorianMoneyCounter\obj\Debug\net8.0-windows\VictorianMoneyCounter.g.resources
 D:\tafe\c# oop\portfolio\Session 1\Victorian Money Counter Task\VictorianMoneyCounter\VictorianMoneyCounter\obj\Debug\net8.0-windows\VictorianMoneyCounter.GeneratedMSBuildEditorConfig.editorconfig
 D:\tafe\c# oop\portfolio\Session 1\Victorian Money Counter Task\VictorianMoneyCounter\VictorianMoneyCounter\obj\Debug\net8.0-windows\VictorianMoneyCounter.AssemblyInfoInputs.cache
@@ -50,6 +48,10 @@ D:\tafe\c# oop\portfolio\Session 1\Victorian Money Counter Task\VictorianMoneyCo
 D:\tafe\c# oop\portfolio\Session 1\Victorian Money Counter Task\VictorianMoneyCounter\VictorianMoneyCounter\obj\Debug\net8.0-windows\VictorianMoneyCounter.pdb
 D:\tafe\c# oop\portfolio\Session 1\Victorian Money Counter Task\VictorianMoneyCounter\VictorianMoneyCounter\obj\Debug\net8.0-windows\VictorianMoneyCounter.genruntimeconfig.cache
 D:\tafe\c# oop\portfolio\Session 1\Victorian Money Counter Task\VictorianMoneyCounter\VictorianMoneyCounter\obj\Debug\net8.0-windows\ref\VictorianMoneyCounter.dll
-D:\tafe\c# oop\portfolio\Session 1\Victorian Money Counter Task\VictorianMoneyCounter\VictorianMoneyCounter\obj\Debug\net8.0-windows\WalletDenominationRow.g.cs
 D:\tafe\c# oop\portfolio\Session 1\Victorian Money Counter Task\VictorianMoneyCounter\VictorianMoneyCounter\obj\Debug\net8.0-windows\GeneratedInternalTypeHelper.g.cs
-D:\tafe\c# oop\portfolio\Session 1\Victorian Money Counter Task\VictorianMoneyCounter\VictorianMoneyCounter\obj\Debug\net8.0-windows\WalletDenominationRow.baml
+D:\tafe\c# oop\portfolio\Session 1\Victorian Money Counter Task\VictorianMoneyCounter\VictorianMoneyCounter\obj\Debug\net8.0-windows\Views\DenominationRow.g.cs
+D:\tafe\c# oop\portfolio\Session 1\Victorian Money Counter Task\VictorianMoneyCounter\VictorianMoneyCounter\obj\Debug\net8.0-windows\Views\DenominationRow.baml
+D:\tafe\c# oop\portfolio\Session 1\Victorian Money Counter Task\VictorianMoneyCounter\VictorianMoneyCounter\obj\Debug\net8.0-windows\MainWindow.g.cs
+D:\tafe\c# oop\portfolio\Session 1\Victorian Money Counter Task\VictorianMoneyCounter\VictorianMoneyCounter\obj\Debug\net8.0-windows\Views\MainPage.g.cs
+D:\tafe\c# oop\portfolio\Session 1\Victorian Money Counter Task\VictorianMoneyCounter\VictorianMoneyCounter\obj\Debug\net8.0-windows\MainWindow.baml
+D:\tafe\c# oop\portfolio\Session 1\Victorian Money Counter Task\VictorianMoneyCounter\VictorianMoneyCounter\obj\Debug\net8.0-windows\Views\MainPage.baml

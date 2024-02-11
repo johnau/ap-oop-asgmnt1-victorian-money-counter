@@ -10,11 +10,11 @@ none
 false
 TRACE;DEBUG;NET;NET8_0;NETCOREAPP
 D:\tafe\c# oop\portfolio\Session 1\Victorian Money Counter Task\VictorianMoneyCounter\VictorianMoneyCounter\App.xaml
-2108903626
+31761645541
 
-11248727354
+14-758652259
 226-1394188283
-MainWindow.xaml;WalletDenominationRow.xaml;
+MainWindow.xaml;Views\DenominationRow.xaml;Views\MainPage.xaml;
 
 False
 

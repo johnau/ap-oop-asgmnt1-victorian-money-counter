@@ -11,4 +11,5 @@ public static class ServiceExtensions
         services.AddSingleton<Func<TForm>>(x => () => x.GetService<TForm>()!);
         services.AddSingleton<IAbstractFactory<TForm>, AbstractFactory<TForm>>();
     }
+
 }

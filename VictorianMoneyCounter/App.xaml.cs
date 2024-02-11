@@ -1,7 +1,11 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using System.Diagnostics;
 using System.Windows;
-//using VictorianMoneyCounter.StartupHelpers;
+using VictorianMoneyCounter.Model.Aggregates;
+using VictorianMoneyCounter.StartupHelpers;
+using VictorianMoneyCounter.ViewModels;
+using VictorianMoneyCounter.Views;
 
 namespace VictorianMoneyCounter;
 
@@ -14,11 +18,16 @@ public partial class App : Application
         AppHost = Host.CreateDefaultBuilder()
             .ConfigureServices((hostContext, services) =>
             {
+                services.AddGenericFactory<Wallet>();
                 services.AddSingleton<MainWindow>();
-                //services.AddFormFactory<ChildForm>();
+                services.AddTransient<MainPageViewModel>();
+                services.AddGenericFactory<MainPage>();
+                services.AddTransient<DenominationRowViewModel>();
+                services.AddUserControlFactory<DenominationRow>();
                 //services.AddTransient<IDataAccess, DataAccess>();
             })
             .Build();
+        Debug.WriteLine("Registered object graph");
     }
 
     protected override async void OnStartup(StartupEventArgs e)

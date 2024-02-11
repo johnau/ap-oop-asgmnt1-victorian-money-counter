@@ -53,7 +53,7 @@ namespace VictorianMoneyCounter {
                 return;
             }
             _contentLoaded = true;
-            System.Uri resourceLocater = new System.Uri("/VictorianMoneyCounter;V1.0.0.0;component/walletdenominationrow.xaml", System.UriKind.Relative);
+            System.Uri resourceLocater = new System.Uri("/VictorianMoneyCounter;component/walletdenominationrow.xaml", System.UriKind.Relative);
             
             #line 1 "..\..\..\WalletDenominationRow.xaml"
             System.Windows.Application.LoadComponent(this, resourceLocater);

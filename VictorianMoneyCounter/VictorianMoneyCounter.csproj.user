@@ -7,15 +7,21 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
-    <Compile Update="WalletDenominationRow.xaml.cs">
+    <Compile Update="Views\DenominationRow.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\MainPage.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Page Update="Views\DenominationRow.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="MainWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="WalletDenominationRow.xaml">
+    <Page Update="Views\MainPage.xaml">
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>

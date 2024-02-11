@@ -1,21 +1,22 @@
 ﻿using System.Windows;
+using VictorianMoneyCounter.StartupHelpers;
 using VictorianMoneyCounter.Views;
 
 namespace VictorianMoneyCounter;
 
 public partial class MainWindow : Window
 {
-    private readonly MainPage MainPage;
+    private readonly IAbstractFactory<MainPage> _MainPageFactory;
 
-    public MainWindow(MainPage mainPage)
+    public MainWindow(IAbstractFactory<MainPage> mainPageFactory)
     {
-        MainPage = mainPage;
+        _MainPageFactory = mainPageFactory;
         InitializeComponent();
         Loaded += MainWindow_Loaded;
     }
 
     private void MainWindow_Loaded(object sender, RoutedEventArgs e)
     {
-        AddChild(MainPage);
+        AddChild(_MainPageFactory.Create());
     }
 }

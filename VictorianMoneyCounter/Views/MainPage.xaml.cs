@@ -8,7 +8,6 @@ namespace VictorianMoneyCounter.Views;
 public partial class MainPage : Page
 {
     private MainPageViewModel _ViewModel => (MainPageViewModel)DataContext;
-
     private readonly IAbstractFactory<DenominationRow> _RowFactory;
 
     public MainPage(MainPageViewModel viewModel, IAbstractFactory<DenominationRow> rowFactory)
@@ -21,9 +20,12 @@ public partial class MainPage : Page
 
     private void MainPage_Loaded(object sender, System.Windows.RoutedEventArgs e)
     {
+        // this is still just view code, but now the issue is linking with data without having data here
+        // eventually want to loosen this up to handle any number of rows for other assets
         for (int i = 1; i <= 5; i++)
         {
             DenominationRow denominationRow = _RowFactory.Create();
+            denominationRow.GetViewModel().Index = i;
             MainLayoutGrid.Children.Add(denominationRow);
             Grid.SetRow(denominationRow, i);
         }

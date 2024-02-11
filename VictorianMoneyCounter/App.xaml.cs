@@ -3,6 +3,7 @@ using Microsoft.Extensions.Hosting;
 using System.Diagnostics;
 using System.Windows;
 using VictorianMoneyCounter.Model.Aggregates;
+using VictorianMoneyCounter.Service;
 using VictorianMoneyCounter.StartupHelpers;
 using VictorianMoneyCounter.ViewModels;
 using VictorianMoneyCounter.Views;
@@ -18,12 +19,16 @@ public partial class App : Application
         AppHost = Host.CreateDefaultBuilder()
             .ConfigureServices((hostContext, services) =>
             {
-                services.AddGenericFactory<Wallet>();
+                services.AddSingleton<IWalletManager<Wallet>, WalletManager>();
+                //services.AddGenericFactory<Wallet>();
+                
                 services.AddSingleton<MainWindow>();
+                
                 services.AddTransient<MainPageViewModel>();
                 services.AddGenericFactory<MainPage>();
+
                 services.AddTransient<DenominationRowViewModel>();
-                services.AddUserControlFactory<DenominationRow>();
+                services.AddGenericFactory<DenominationRow>();
                 //services.AddTransient<IDataAccess, DataAccess>();
             })
             .Build();
@@ -33,6 +38,9 @@ public partial class App : Application
     protected override async void OnStartup(StartupEventArgs e)
     {
         await AppHost!.StartAsync();
+
+        IWalletManager<Wallet> walletManager = AppHost.Services.GetRequiredService<IWalletManager<Wallet>>();
+        string id = walletManager.CreateNewWallet();
 
         var startupForm = AppHost.Services.GetRequiredService<MainWindow>();
         startupForm.Show();

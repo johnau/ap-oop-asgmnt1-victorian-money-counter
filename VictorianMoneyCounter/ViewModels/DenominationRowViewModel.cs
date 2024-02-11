@@ -3,9 +3,10 @@ using CommunityToolkit.Mvvm.Input;
 using System.Diagnostics;
 
 namespace VictorianMoneyCounter.ViewModels;
-
-public partial class DenominationRowViewModel : ObservableObject
+public partial class DenominationRowViewModel : ObservableObject, IIndexedViewModel
 {
+    public int Index { get; set; }
+
     [ObservableProperty]
     private string _label = "<not set>";
 
@@ -15,7 +16,7 @@ public partial class DenominationRowViewModel : ObservableObject
 
     public DenominationRowViewModel()
     {
-        Debug.WriteLine("New Denom View Model instasntiated: " + this.GetHashCode());
+        Debug.WriteLine("New DenominationRowViewModel instasntiated: " + this.GetHashCode());
     }
 
     public void SetLabel(string label) => Label = label;

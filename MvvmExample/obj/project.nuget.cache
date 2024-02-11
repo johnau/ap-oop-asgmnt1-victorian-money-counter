@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "iJNnoujA7MnVkr4RtpLYwfOvXq83fW4b0oRpvbUC/cOnzDGMqzu36cpu/PH+5sunTx9c9pop+5esg5JhRIfgcQ==",
+  "success": true,
+  "projectFilePath": "D:\\tafe\\c# oop\\portfolio\\Session 1\\Victorian Money Counter Task\\VictorianMoneyCounter\\MvvmExample\\MvvmExample.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\John\\.nuget\\packages\\communitytoolkit.mvvm\\8.2.2\\communitytoolkit.mvvm.8.2.2.nupkg.sha512"
+  ],
+  "logs": []
+}

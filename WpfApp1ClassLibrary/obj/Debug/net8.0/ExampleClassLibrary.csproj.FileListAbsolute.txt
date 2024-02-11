@@ -1,0 +1,11 @@
+D:\tafe\c# oop\portfolio\Session 1\Victorian Money Counter Task\VictorianMoneyCounter\WpfApp1ClassLibrary\bin\Debug\net8.0\ExampleClassLibrary.deps.json
+D:\tafe\c# oop\portfolio\Session 1\Victorian Money Counter Task\VictorianMoneyCounter\WpfApp1ClassLibrary\bin\Debug\net8.0\ExampleClassLibrary.dll
+D:\tafe\c# oop\portfolio\Session 1\Victorian Money Counter Task\VictorianMoneyCounter\WpfApp1ClassLibrary\bin\Debug\net8.0\ExampleClassLibrary.pdb
+D:\tafe\c# oop\portfolio\Session 1\Victorian Money Counter Task\VictorianMoneyCounter\WpfApp1ClassLibrary\obj\Debug\net8.0\ExampleClassLibrary.GeneratedMSBuildEditorConfig.editorconfig
+D:\tafe\c# oop\portfolio\Session 1\Victorian Money Counter Task\VictorianMoneyCounter\WpfApp1ClassLibrary\obj\Debug\net8.0\ExampleClassLibrary.AssemblyInfoInputs.cache
+D:\tafe\c# oop\portfolio\Session 1\Victorian Money Counter Task\VictorianMoneyCounter\WpfApp1ClassLibrary\obj\Debug\net8.0\ExampleClassLibrary.AssemblyInfo.cs
+D:\tafe\c# oop\portfolio\Session 1\Victorian Money Counter Task\VictorianMoneyCounter\WpfApp1ClassLibrary\obj\Debug\net8.0\ExampleClassLibrary.csproj.CoreCompileInputs.cache
+D:\tafe\c# oop\portfolio\Session 1\Victorian Money Counter Task\VictorianMoneyCounter\WpfApp1ClassLibrary\obj\Debug\net8.0\ExampleClassLibrary.dll
+D:\tafe\c# oop\portfolio\Session 1\Victorian Money Counter Task\VictorianMoneyCounter\WpfApp1ClassLibrary\obj\Debug\net8.0\refint\ExampleClassLibrary.dll
+D:\tafe\c# oop\portfolio\Session 1\Victorian Money Counter Task\VictorianMoneyCounter\WpfApp1ClassLibrary\obj\Debug\net8.0\ExampleClassLibrary.pdb
+D:\tafe\c# oop\portfolio\Session 1\Victorian Money Counter Task\VictorianMoneyCounter\WpfApp1ClassLibrary\obj\Debug\net8.0\ref\ExampleClassLibrary.dll

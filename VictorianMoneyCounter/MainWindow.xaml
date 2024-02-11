@@ -5,8 +5,36 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:VictorianMoneyCounter"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" MinHeight="800" MinWidth="600" Height="800" Width="600">
+    <Window.Resources>
+        <Style TargetType="TextBlock"> <!-- why does this apply to all TextBlocks here, but on UserControl it does not and is instead overriden by the named style? --> 
+            <Setter Property="HorizontalAlignment" Value="Center" />
+            <Setter Property="FontSize" Value="24" />
+        </Style>
+        <Style x:Key="LargeText" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="50" />
+            <Setter Property="FontWeight" Value="SemiBold" />
+        </Style>
+    </Window.Resources>
     <Grid>
-
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <Border BorderBrush="Black" BorderThickness="0 0 0 1" Grid.Row="0" >
+            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                <TextBlock Text="0 0 0 0 0 0" Style="{StaticResource LargeText}" />
+                <TextBlock Text="Total Worth" />
+            </StackPanel>
+        </Border>
+        <local:WalletDenominationRow Grid.Row="1" Background="#00aaff"/>
+        <local:WalletDenominationRow Grid.Row="2" Background="#0099ff"/>
+        <local:WalletDenominationRow Grid.Row="3" Background="#0088ff"/>
+        <local:WalletDenominationRow Grid.Row="4" Background="#0077ff"/>
+        <local:WalletDenominationRow Grid.Row="5" Background="#0066ff"/>
     </Grid>
 </Window>

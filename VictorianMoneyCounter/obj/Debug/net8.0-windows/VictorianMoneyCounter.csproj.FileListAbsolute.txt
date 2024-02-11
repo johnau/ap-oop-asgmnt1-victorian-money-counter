@@ -50,3 +50,6 @@ D:\tafe\c# oop\portfolio\Session 1\Victorian Money Counter Task\VictorianMoneyCo
 D:\tafe\c# oop\portfolio\Session 1\Victorian Money Counter Task\VictorianMoneyCounter\VictorianMoneyCounter\obj\Debug\net8.0-windows\VictorianMoneyCounter.pdb
 D:\tafe\c# oop\portfolio\Session 1\Victorian Money Counter Task\VictorianMoneyCounter\VictorianMoneyCounter\obj\Debug\net8.0-windows\VictorianMoneyCounter.genruntimeconfig.cache
 D:\tafe\c# oop\portfolio\Session 1\Victorian Money Counter Task\VictorianMoneyCounter\VictorianMoneyCounter\obj\Debug\net8.0-windows\ref\VictorianMoneyCounter.dll
+D:\tafe\c# oop\portfolio\Session 1\Victorian Money Counter Task\VictorianMoneyCounter\VictorianMoneyCounter\obj\Debug\net8.0-windows\WalletDenominationRow.g.cs
+D:\tafe\c# oop\portfolio\Session 1\Victorian Money Counter Task\VictorianMoneyCounter\VictorianMoneyCounter\obj\Debug\net8.0-windows\GeneratedInternalTypeHelper.g.cs
+D:\tafe\c# oop\portfolio\Session 1\Victorian Money Counter Task\VictorianMoneyCounter\VictorianMoneyCounter\obj\Debug\net8.0-windows\WalletDenominationRow.baml

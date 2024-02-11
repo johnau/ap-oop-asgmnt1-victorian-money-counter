@@ -9,9 +9,31 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Assets\ButtonImages\downArrowDisabled.png" />
+    <None Remove="Assets\ButtonImages\downArrowEnabled.png" />
+    <None Remove="Assets\ButtonImages\upArrowDisabled.png" />
+    <None Remove="Assets\ButtonImages\upArrowEnabled.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.2" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.0.0" />
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="8.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Assets\ButtonImages\downArrowDisabled.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\ButtonImages\downArrowEnabled.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\ButtonImages\upArrowDisabled.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\ButtonImages\upArrowEnabled.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
 
 </Project>

@@ -1,1 +1,1 @@
-* Assignment 1: Victorian Money Counter
+# Assignment 1: Victorian Money Counter

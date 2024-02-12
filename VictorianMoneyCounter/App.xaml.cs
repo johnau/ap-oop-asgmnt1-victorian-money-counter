@@ -20,17 +20,16 @@ public partial class App : Application
             .ConfigureServices((hostContext, services) =>
             {
                 services.AddSingleton<IWalletManager<Wallet>, WalletManager>();
-                //services.AddGenericFactory<Wallet>();
-                
+                services.AddTransient<ICurrencyConverter, CurrencyConverter>();
+
                 services.AddSingleton<MainWindow>();
-                services.AddFormFactory<ChildWindow>(); // Child Window is essentially the same as MainWindow
+                services.AddGenericFactory<ChildWindow>(); // Child window is same as MainWindow, could be removed
                 
                 services.AddTransient<WalletPageViewModel>();
-                services.AddGenericFactory<WalletPage>(); // Factory for WalletPage so multiple wallet views can be displayed
+                services.AddGenericFactory<WalletPage>();
 
                 services.AddTransient<DenominationRowViewModel>();
-                services.AddGenericFactory<DenominationRow>(); // Factory for Denomination Row as many will be needed
-                //services.AddTransient<IDataAccess, DataAccess>();
+                services.AddGenericFactory<DenominationRow>(); // Factory Interf
             })
             .Build();
         Debug.WriteLine("Registered object graph");
@@ -41,7 +40,7 @@ public partial class App : Application
         await AppHost!.StartAsync();
 
         IWalletManager<Wallet> walletManager = AppHost.Services.GetRequiredService<IWalletManager<Wallet>>();
-        string id = walletManager.CreateWallet();
+        walletManager.CreateWallet();
 
         var startupForm = AppHost.Services.GetRequiredService<MainWindow>();
         startupForm.Show();

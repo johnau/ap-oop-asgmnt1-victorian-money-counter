@@ -13,6 +13,9 @@ namespace VictorianMoneyCounter.ViewModels;
 public partial class DenominationRowViewModel : ObservableObject, IIndexedViewModel
 {
     private readonly IWalletManager<Wallet> _WalletManager;
+    private readonly ICurrencyConverter _CurrencyConverter;
+
+    public Denomination Denomination { get; set; }
     public string SingularLabel { get; set; } = string.Empty;
     public string PluralLabel { get; set; } = string.Empty;
     public string WalletId { get; set; } = string.Empty;
@@ -39,12 +42,14 @@ public partial class DenominationRowViewModel : ObservableObject, IIndexedViewMo
     [ObservableProperty]
     public bool _canExchange = true;
 
-    public DenominationRowViewModel(IWalletManager<Wallet> walletManager)
+    public DenominationRowViewModel(IWalletManager<Wallet> walletManager, ICurrencyConverter currencyConverter)
     {
         _WalletManager = walletManager;
+        _CurrencyConverter = currencyConverter;
     }
-    public void Configure(string walletId, int index, int totalRows, string singularLabel, string pluralLabel)
+    public void Configure(Denomination denomination, string walletId, int index, int totalRows, string singularLabel, string pluralLabel)
     {
+        Denomination = denomination;
         WalletId = walletId;
         Index = index;
         TotalRows = totalRows;
@@ -67,30 +72,56 @@ public partial class DenominationRowViewModel : ObservableObject, IIndexedViewMo
         if (TotalRows > 0 && Index == TotalRows) Use_ExchangeDown = false;
     }
 
-    //[RelayCommand]
-    //private void IncreaseByOne() => Quantity += 1; 
     [RelayCommand]
     private void IncreaseByOne()
     {
-        var wallet = _WalletManager.UpdateWallet(WalletId, (Denomination)Index, 1);
-        Quantity = WalletAccessor.Access(wallet).GetDenominationQuantity((Denomination)Index);
-        //Quantity += 1;
+        var wallet = _WalletManager.UpdateWallet(WalletId, Denomination, 1);
+        UpdateQuantityFromWallet(wallet);
     }
 
     [RelayCommand(CanExecute = nameof(IsNotEmpty))]
     private void DecreaseByOne()
     {
-        var wallet = _WalletManager.UpdateWallet(WalletId, (Denomination)Index, -1);
-        Quantity = WalletAccessor.Access(wallet).GetDenominationQuantity((Denomination)Index);
-        //Quantity -= Quantity > 0 ? 1 : 0; // Method already protected, so this check is not really required
+        // Could pre-check Wallet denomination balance, but IsNotEmpty() is effectively performing that task
+        var wallet = _WalletManager.UpdateWallet(WalletId, Denomination, -1); // Throws exception
+        UpdateQuantityFromWallet(wallet);
     }
 
     [RelayCommand(CanExecute = nameof(CanConvertUp))]
-    private void MoveUp() => Quantity -= CanConvertUp() ? DenominationInfoFactory.ConvertDenominationUp((Denomination)Index) : 0;
+    private void MoveUp()
+    {
+        var requiredQuantity = _CurrencyConverter.ConvertUp(Denomination);
+        _WalletManager.UpdateWallet(WalletId, Denomination, -requiredQuantity); // take out req'd qty from wallet
+        var wallet = _WalletManager.UpdateWallet(WalletId, Denomination+1, 1);
+        UpdateQuantityFromWallet(wallet);
+    }
 
     [RelayCommand(CanExecute = nameof(IsNotEmpty))]
-    private void MoveDown() => Quantity -= Quantity > 0 ? 1 : 0;
+    private void MoveDown()
+    {
+        // Could pre-check Wallet denomination balance, but IsNotEmpty() is effectively performing that task
+        _WalletManager.UpdateWallet(WalletId, Denomination, -1); // take out 1 of the denomination to convert down
+        var convertedQuantity = _CurrencyConverter.ConvertDown(Denomination);
+        var wallet = _WalletManager.UpdateWallet(WalletId, Denomination-1, convertedQuantity);
+        UpdateQuantityFromWallet(wallet);
+    }
+
+    /// <summary>
+    /// Temporary helper method to update the 'Quantity' ObservableProperty -> eventually shift to message system
+    /// </summary>
+    /// <param name="wallet"></param>
+    private void UpdateQuantityFromWallet(Wallet wallet) => Quantity = WalletAccessor.Access(wallet).GetDenominationQuantity(Denomination);
+    
+    /// <summary>
+    /// Helper function for RelayCommand CanExecute
+    /// </summary>
+    /// <returns>True if Quantity is greater than 0, else False</returns>
     private bool IsNotEmpty() => Quantity > 0;
-    private bool CanConvertUp() => Quantity >= DenominationInfoFactory.ConvertDenominationUp((Denomination)Index);
+
+    /// <summary>
+    /// Helper function for RelayCommand CanExecute
+    /// </summary>
+    /// <returns>True if Quantity is greater than or equal to required amount for converting to larger denomination</returns>
+    private bool CanConvertUp() => Quantity >= _CurrencyConverter.ConvertUp(Denomination);
 
 }

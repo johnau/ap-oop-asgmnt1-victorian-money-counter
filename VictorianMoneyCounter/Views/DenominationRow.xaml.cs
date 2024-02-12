@@ -3,7 +3,7 @@ using VictorianMoneyCounter.ViewModels;
 
 namespace VictorianMoneyCounter.Views;
 
-public partial class DenominationRow : UserControl
+public partial class DenominationRow : UserControl, IDenominationRow<DenominationRowViewModel>
 {
     private DenominationRowViewModel ViewModel => (DenominationRowViewModel) DataContext;
     

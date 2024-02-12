@@ -5,13 +5,13 @@ namespace VictorianMoneyCounter.Service;
 
 public class WalletManager : IWalletManager<Wallet>
 {
+    // Replace Dictionary with repository
     private readonly Dictionary<string, Wallet> _wallets = [];
 
     public WalletManager()
     {
-        CreateWallet(); // create a default wallet
+        CreateWallet(); // default wallet
     }
-
     public string CreateWallet()
     {
         var wallet = new Wallet();
@@ -59,18 +59,10 @@ public class WalletManager : IWalletManager<Wallet>
         if (!_wallets.TryGetValue(id, out var wallet))
             throw new InvalidOperationException($"Wallet ID: {id} is not recognized");
 
-        return UpdateWallet(WalletAccessor.Access(wallet).UpdateDenominationQuantity(denomination, changeAmount));
+        if (WalletAccessor.Access(wallet).GetDenominationQuantity(denomination) + changeAmount < 0)
+            throw new InvalidOperationException($"Can not complete transaction of {denomination}: Insufficient balance!");
 
-        // Moved to WalletAccessor class
-        //return denomination switch
-        //{
-        //    Denomination.Pound => UpdateWallet(wallet.WithPoundsTransaction(changeAmount)),
-        //    Denomination.Crown => UpdateWallet(wallet.WithCrownsTransaction(changeAmount)),
-        //    Denomination.Shilling => UpdateWallet(wallet.WithShillingsTransaction(changeAmount)),
-        //    Denomination.Penny => UpdateWallet(wallet.WithPenceTransaction(changeAmount)),
-        //    Denomination.Farthing => UpdateWallet(wallet.WithFarthingsTransaction(changeAmount)),
-        //    _ => throw new InvalidOperationException($"Unrecognized denomination: {denomination}"),
-        //};
+        return SaveWallet(WalletAccessor.Access(wallet).UpdateDenominationQuantity(denomination, changeAmount));
     }
 
     /// <summary>
@@ -80,16 +72,16 @@ public class WalletManager : IWalletManager<Wallet>
     /// <param name="wallet"></param>
     /// <returns></returns>
     /// <exception cref="InvalidOperationException"></exception>
-    private Wallet UpdateWallet(Wallet wallet)
+    private Wallet SaveWallet(Wallet wallet)
     {
         if (!_wallets.ContainsKey(wallet.Id))
         {
             throw new InvalidOperationException($"Wallet ID: {wallet.Id} is not recognized");
         }
 
-        // fire some type of even that the wallet has been updated
+        // Fire wallet update event here?
 
         _wallets[wallet.Id] = wallet;
-        return wallet; // In future this will return an update wallet instance which will have a database ID (and current wallet Id can become a name)
+        return wallet;
     }
 }

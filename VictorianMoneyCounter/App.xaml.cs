@@ -41,7 +41,7 @@ public partial class App : Application
         await AppHost!.StartAsync();
 
         IWalletManager<Wallet> walletManager = AppHost.Services.GetRequiredService<IWalletManager<Wallet>>();
-        string id = walletManager.CreateNewWallet();
+        string id = walletManager.CreateWallet();
 
         var startupForm = AppHost.Services.GetRequiredService<MainWindow>();
         startupForm.Show();

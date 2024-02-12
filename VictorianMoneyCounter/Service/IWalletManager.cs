@@ -1,12 +1,12 @@
-﻿namespace VictorianMoneyCounter.Service;
+﻿using VictorianMoneyCounter.Model.Aggregates;
+
+namespace VictorianMoneyCounter.Service;
 
 public interface IWalletManager<T>
 {
-    Dictionary<string, T> _wallets { get; }
+    string CreateWallet();
 
-    string CreateNewWallet();
+    T FindWalletById(string id = "");
 
-    T GetWallet(string id);
-
-    T GetWallet();
+    T UpdateWallet(string id, Denomination denomination, int valueChange);
 }

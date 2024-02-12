@@ -5,7 +5,7 @@ public enum Denomination
     Pound = 1,
     Crown = 2,
     Shilling = 3,
-    Pence = 4,
+    Penny = 4,
     Farthing = 5
 }
 
@@ -27,7 +27,7 @@ public static class DenominationInfoFactory
             case Denomination.Shilling:
             case Denomination.Farthing:
                 return new DenominationInfo((int)denomination, denomination.ToString().ToLower(), denomination.ToString().ToLower() + "s");
-            case Denomination.Pence:
+            case Denomination.Penny:
                 return new DenominationInfo((int)denomination, "penny", "pence");
             default:
                 throw new ArgumentException("Unrecognized Denomination");
@@ -53,7 +53,7 @@ public static class DenominationInfoFactory
                 return 4; // 4 crowns convert up to 1 pound
             case Denomination.Shilling:
                 return 5; // 5 shillings convert up to 1 crown
-            case Denomination.Pence:
+            case Denomination.Penny:
                 return 12; // 12 pence convert up to 1 shilling
             case Denomination.Farthing:
                 return 4; // 4 farthings convert up to 1 penny            
@@ -83,7 +83,7 @@ public static class DenominationInfoFactory
                 return 5; // 1 crown converts down to 5 shillings
             case Denomination.Shilling:
                 return 12; // 1 shilling converts down to 12 pence
-            case Denomination.Pence:
+            case Denomination.Penny:
                 return 4; // 1 penny converts down to 4 farthings
             case Denomination.Farthing:
                 return 0;

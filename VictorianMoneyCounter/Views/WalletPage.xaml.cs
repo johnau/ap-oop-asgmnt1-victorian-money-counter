@@ -1,4 +1,4 @@
-﻿using System.Diagnostics;
+﻿using System.Windows;
 using System.Windows.Controls;
 using VictorianMoneyCounter.Model.Aggregates;
 using VictorianMoneyCounter.StartupHelpers;
@@ -6,7 +6,6 @@ using VictorianMoneyCounter.ViewModels;
 
 namespace VictorianMoneyCounter.Views;
 
-// This page component needs to load up the Denomination Row objects that are from injection
 public partial class WalletPage : Page
 {
     private WalletPageViewModel _ViewModel => (WalletPageViewModel)DataContext;
@@ -20,7 +19,7 @@ public partial class WalletPage : Page
         Loaded += ConfigurePage;
     }
 
-    private void ConfigurePage(object sender, System.Windows.RoutedEventArgs e)
+    private void ConfigurePage(object sender, RoutedEventArgs e)
     {
         Array _ = Enum.GetValues(typeof(Denomination));
         int _total = _.Length;

@@ -5,32 +5,91 @@ namespace VictorianMoneyCounter.Service;
 
 public class WalletManager : IWalletManager<Wallet>
 {
-    public Dictionary<string, Wallet> _wallets { get; private set; } = [];
+    private readonly Dictionary<string, Wallet> _wallets = [];
 
     public WalletManager()
     {
-        CreateNewWallet(); // create a default wallet
+        CreateWallet(); // create a default wallet
     }
 
-    public string CreateNewWallet()
+    public string CreateWallet()
     {
-        Wallet wallet = new();
-        _wallets.Add(wallet.Id, wallet);
-
-        Debug.WriteLine("Created a new Wallet: " + wallet.Id);
-
-        return wallet.Id;
+        var wallet = new Wallet();
+        if (_wallets.TryAdd(wallet.Id, wallet))
+        {
+            Debug.WriteLine("Created a new Wallet: " + wallet.Id);
+            return wallet.Id;
+        } else
+        {
+            throw new Exception("Failed to create new wallet");
+        }
     }
 
-    public Wallet GetWallet(string id)
+    /// <summary>
+    /// Finds a Wallet by Id or if no Id provided, returns the first wallet in the Dict.
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    /// <exception cref="Exception"></exception>
+    public Wallet FindWalletById(string id = "")
     {
-        return _wallets[id];
+        if (id == null || id == string.Empty)
+        {
+            if (_wallets.Count == 0) 
+                throw new Exception("Internal error"); // There should always be a wallet
+            return _wallets.Values.First<Wallet>();
+        }
+
+        if (!_wallets.TryGetValue(id, out var wallet))
+            throw new Exception("No wallet with that ID");
+        else
+            return wallet;
     }
 
-    public Wallet GetWallet()
+    /// <summary>
+    /// Create a transaction on a Wallet by ID, Denomination, and transaction value (+ve/-ve).
+    /// </summary>
+    /// <param name="id"></param>
+    /// <param name="denomination"></param>
+    /// <param name="changeAmount"></param>
+    /// <returns>Immutable Wallet Instance with updated values or Error</returns>
+    /// <exception cref="InvalidOperationException"></exception>
+    public Wallet UpdateWallet(string id, Denomination denomination, int changeAmount)
     {
-        if (_wallets.Count == 0) throw new Exception("Internal error"); // There should always be a wallet
+        if (!_wallets.TryGetValue(id, out var wallet))
+            throw new InvalidOperationException($"Wallet ID: {id} is not recognized");
 
-        return _wallets.Values.First<Wallet>();
+        return UpdateWallet(WalletAccessor.Access(wallet).UpdateDenominationQuantity(denomination, changeAmount));
+
+        // Moved to WalletAccessor class
+        //return denomination switch
+        //{
+        //    Denomination.Pound => UpdateWallet(wallet.WithPoundsTransaction(changeAmount)),
+        //    Denomination.Crown => UpdateWallet(wallet.WithCrownsTransaction(changeAmount)),
+        //    Denomination.Shilling => UpdateWallet(wallet.WithShillingsTransaction(changeAmount)),
+        //    Denomination.Penny => UpdateWallet(wallet.WithPenceTransaction(changeAmount)),
+        //    Denomination.Farthing => UpdateWallet(wallet.WithFarthingsTransaction(changeAmount)),
+        //    _ => throw new InvalidOperationException($"Unrecognized denomination: {denomination}"),
+        //};
+    }
+
+    /// <summary>
+    /// This method would eventually encompass interactions with other service or repository for persistence,
+    /// Currently updates the Dictionary holder in the WalletManager service class.
+    /// </summary>
+    /// <param name="wallet"></param>
+    /// <returns></returns>
+    /// <exception cref="InvalidOperationException"></exception>
+    private Wallet UpdateWallet(Wallet wallet)
+    {
+        if (!_wallets.ContainsKey(wallet.Id))
+        {
+            throw new InvalidOperationException($"Wallet ID: {wallet.Id} is not recognized");
+        }
+
+        // fire some type of even that the wallet has been updated
+
+        _wallets[wallet.Id] = wallet;
+        return wallet; // In future this will return an update wallet instance which will have a database ID (and current wallet Id can become a name)
     }
 }

@@ -8,6 +8,12 @@ namespace VictorianMoneyCounter.Views;
 
 /// <summary>
 /// View of a Victorian Wallet
+/// 
+/// 
+/// Cool thing to do, add some crude animation of the coins dropping into their row as they are added
+/// Then be able to shake the app and make it shake the coins down the rows
+/// 
+/// 
 /// </summary>
 public partial class WalletPage : Page
 {

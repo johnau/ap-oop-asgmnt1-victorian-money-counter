@@ -2,6 +2,7 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
+using System.Diagnostics;
 
 namespace MvvmExample;
 
@@ -42,5 +43,21 @@ public partial class MainWindowViewModel : ObservableObject //ObservableRecipien
         FirstName = "Not John";
     }
 
+    [RelayCommand]
+    private void MouseEvent()
+    {
+        Debug.WriteLine("Mouse event!");
+    }
 
+    [RelayCommand]
+    private void MouseUp()
+    {
+        Debug.WriteLine("Mouse up!");
+    }
+
+    [RelayCommand]
+    private void MouseDown()
+    {
+        Debug.WriteLine("Mouse down!");
+    }
 }

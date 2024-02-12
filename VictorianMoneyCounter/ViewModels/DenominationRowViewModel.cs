@@ -41,16 +41,18 @@ public partial class DenominationRowViewModel : ObservableObject, IIndexedViewMo
     [ObservableProperty]
     public bool _canExchange = true;
 
-    [ObservableProperty]
-    public Dictionary<string, bool> _actionHeld = [];
+    // replace this with a single property (IRelayCommand) to avoid two items moving together
+    public Dictionary<IRelayCommand, bool> _actionHeld = [];
 
     public DenominationRowViewModel(IWalletManager<Wallet> walletManager, ICurrencyConverter currencyConverter)
     {
         _WalletManager = walletManager;
         _CurrencyConverter = currencyConverter;
-        _actionHoldTimer = new DispatcherTimer();
-        _actionHoldTimer.Interval = TimeSpan.FromMilliseconds(50);
-        _actionHoldTimer.Tick += HoldAction;
+        _actionHoldTimer = new()
+        {
+            Interval = TimeSpan.FromMilliseconds(25)
+        };
+        _actionHoldTimer.Tick += TimerTickAction;
     }
 
     public void Configure(Denomination denomination, string walletId, int index, int totalRows, string singularLabel, string pluralLabel)
@@ -67,6 +69,7 @@ public partial class DenominationRowViewModel : ObservableObject, IIndexedViewMo
     }
 
     partial void OnQuantityChanged(int value) => Label = value == 1 ? SingularLabel : PluralLabel;
+
     partial void OnLabelChanged(string? oldValue, string newValue) => Label = (oldValue == null || !oldValue.Equals(newValue)) ? StringHelpers.CapitalizeFirstLetter(newValue) : Label;
 
     /// <summary>
@@ -75,8 +78,7 @@ public partial class DenominationRowViewModel : ObservableObject, IIndexedViewMo
     [RelayCommand]
     private void IncreaseByOne()
     {
-        var wallet = _WalletManager.UpdateWallet(WalletId, Denomination, 1);
-        //UpdateQuantityFromWallet(wallet); // Updates now called from pub/sub to wallet updates
+        _WalletManager.UpdateWallet(WalletId, Denomination, 1);
     }
 
     /// <summary>
@@ -86,8 +88,7 @@ public partial class DenominationRowViewModel : ObservableObject, IIndexedViewMo
     private void DecreaseByOne()
     {
         // Could pre-check Wallet denomination balance, but IsNotEmpty() is effectively performing that task
-        var wallet = _WalletManager.UpdateWallet(WalletId, Denomination, -1); // Throws exception
-        //UpdateQuantityFromWallet(wallet); // Updates now called from pub/sub to wallet updates
+        _WalletManager.UpdateWallet(WalletId, Denomination, -1); // Throws exception
     }
 
     /// <summary>
@@ -99,8 +100,7 @@ public partial class DenominationRowViewModel : ObservableObject, IIndexedViewMo
     {
         var requiredQuantity = _CurrencyConverter.ConvertUp(Denomination);
         _WalletManager.UpdateWallet(WalletId, Denomination, -requiredQuantity); // Take out req'd quantity from the Wallet
-        var wallet = _WalletManager.UpdateWallet(WalletId, Denomination+1, 1);
-        //UpdateQuantityFromWallet(wallet); // Updates now called from pub/sub to wallet updates
+        _WalletManager.UpdateWallet(WalletId, Denomination+1, 1);
     }
 
     /// <summary>
@@ -113,8 +113,23 @@ public partial class DenominationRowViewModel : ObservableObject, IIndexedViewMo
         // Could pre-check Wallet denomination balance, but IsNotEmpty() is effectively performing that task
         _WalletManager.UpdateWallet(WalletId, Denomination, -1); // Take out 1 of the denomination to exchange for next lower denomination
         var convertedQuantity = _CurrencyConverter.ConvertDown(Denomination);
-        var wallet = _WalletManager.UpdateWallet(WalletId, Denomination-1, convertedQuantity);
-        //UpdateQuantityFromWallet(wallet); // Updates now called from pub/sub to wallet updates
+        _WalletManager.UpdateWallet(WalletId, Denomination-1, convertedQuantity);
+    }
+
+    [RelayCommand]
+    //private async Task HoldAction(IRelayCommand command)
+    private void HoldAction(IRelayCommand command)
+    {
+        //await Task.Delay(200);
+        _actionHoldTimer.Start();
+        _actionHeld[command] = true;
+    }
+
+    [RelayCommand]
+    private void ReleaseAction(IRelayCommand command)
+    {
+        _actionHoldTimer.Stop();
+        _actionHeld[command] = false;
     }
 
     /// <summary>
@@ -130,24 +145,13 @@ public partial class DenominationRowViewModel : ObservableObject, IIndexedViewMo
     private bool CanConvertUp() => Quantity > 0 && Quantity >= _CurrencyConverter.ConvertUp(Denomination); // Should this ref the wallet instead of Quantity
 
     /// <summary>
-    /// Method that carries out actions every timer tick, to allow sustained actions (ie. when a user clicks and holds the button)
-    /// </summary>
-    /// <param name="sender"></param>
-    /// <param name="e"></param>
-    /// <exception cref="NotImplementedException"></exception>
-    private void HoldAction(object? sender, EventArgs e)
-    {
-        throw new NotImplementedException();
-    }
-
-    /// <summary>
     /// Call to force an update on the model
     /// </summary>
     public void Update()
     {
         var wallet = _WalletManager.FindWalletById(WalletId);
         UpdateQuantityFromWallet(wallet);
-        Debug.WriteLine($">> {Denomination}={Quantity}");
+        //Debug.WriteLine($">> {Denomination}={Quantity}");
     }
 
     /// <summary>
@@ -155,4 +159,13 @@ public partial class DenominationRowViewModel : ObservableObject, IIndexedViewMo
     /// </summary>
     /// <param name="wallet"></param>
     private void UpdateQuantityFromWallet(Wallet wallet) => Quantity = WalletAccessor.Access(wallet).GetDenominationQuantity(Denomination);
+
+    private void TimerTickAction(object? sender, EventArgs e)
+    {
+        foreach (var command in _actionHeld.Keys)
+        {
+            if (_actionHeld[command] && command.CanExecute(null))
+                command.Execute(null);
+        }
+    }
 }

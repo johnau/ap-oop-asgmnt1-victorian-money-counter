@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:behaviors="http://schemas.microsoft.com/xaml/behaviors"
         xmlns:local="clr-namespace:MvvmExample"
         mc:Ignorable="d"
         d:DataContext="{d:DesignInstance Type=local:MainWindowViewModel}"
@@ -12,7 +13,22 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <TextBlock Text="{Binding FirstName}" MouseEnter="TextBlock_MouseEnter"/>
-        <Button Content="Click Me" Grid.Row="1" Command="{Binding ClickCommand}" />
+        <TextBlock Text="{Binding FirstName}"/>
+        <Button 
+            Content="Click Me" 
+            Grid.Row="1" 
+            Command="{Binding ClickCommand}">
+            <behaviors:Interaction.Triggers>
+                <behaviors:EventTrigger EventName="PreviewMouseUp">
+                    <behaviors:InvokeCommandAction Command="{Binding MouseUpCommand}" />
+                </behaviors:EventTrigger>
+                <behaviors:EventTrigger EventName="PreviewMouseDown">
+                    <behaviors:InvokeCommandAction Command="{Binding MouseDownCommand}" />
+                </behaviors:EventTrigger>                
+            </behaviors:Interaction.Triggers>
+        </Button>
+        <Rectangle>
+
+        </Rectangle>
     </Grid>
 </Window>

@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System.Diagnostics;
+using System.Windows;
 
 namespace MvvmExample;
 
@@ -12,8 +13,4 @@ public partial class MainWindow : Window
         InitializeComponent();
     }
 
-    private void TextBlock_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
-    {
-
-    }
 }

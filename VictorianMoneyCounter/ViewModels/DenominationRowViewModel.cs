@@ -25,9 +25,6 @@ public partial class DenominationRowViewModel : ObservableObject, IIndexedViewMo
     [ObservableProperty]
     public int _index;
 
-    //[ObservableProperty]
-    public int TotalRows { get; set; }
-
     [ObservableProperty]
     private string _label = string.Empty;
 
@@ -61,13 +58,12 @@ public partial class DenominationRowViewModel : ObservableObject, IIndexedViewMo
         Denomination = denomination;
         WalletId = walletId;
         Index = index;
-        TotalRows = totalRows;
         SingularLabel = singularLabel;
         PluralLabel = pluralLabel;
         Label = pluralLabel;
 
         if (Index == 1) Use_ExchangeUp = false;
-        if (TotalRows > 0 && Index == TotalRows) Use_ExchangeDown = false;
+        if (totalRows > 0 && Index == totalRows) Use_ExchangeDown = false;
     }
 
     partial void OnQuantityChanged(int value) => Label = value == 1 ? SingularLabel : PluralLabel;

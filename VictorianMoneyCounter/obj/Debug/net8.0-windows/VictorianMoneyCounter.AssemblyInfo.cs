@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("VictorianMoneyCounter")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+41bf32765d9f70258b950eda0fc80cedcce71ae9")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+8e936601b2bff244511383f754bfe4b588b4f27f")]
 [assembly: System.Reflection.AssemblyProductAttribute("VictorianMoneyCounter")]
 [assembly: System.Reflection.AssemblyTitleAttribute("VictorianMoneyCounter")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

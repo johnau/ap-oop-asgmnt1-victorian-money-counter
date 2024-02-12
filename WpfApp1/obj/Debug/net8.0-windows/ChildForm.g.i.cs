@@ -61,7 +61,7 @@ namespace WpfApp1 {
                 return;
             }
             _contentLoaded = true;
-            System.Uri resourceLocater = new System.Uri("/ContaineredInjectionExample;component/childform.xaml", System.UriKind.Relative);
+            System.Uri resourceLocater = new System.Uri("/ContaineredInjectionExample;V1.0.0.0;component/childform.xaml", System.UriKind.Relative);
             
             #line 1 "..\..\..\ChildForm.xaml"
             System.Windows.Application.LoadComponent(this, resourceLocater);

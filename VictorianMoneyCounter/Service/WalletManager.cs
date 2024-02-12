@@ -102,6 +102,7 @@ public class WalletManager : IWalletManager<Wallet>
 
         _wallets[wallet.Id] = wallet;
 
+        Debug.WriteLine("==Wallet Update==");
         NotifySubscribers();
 
         return wallet;

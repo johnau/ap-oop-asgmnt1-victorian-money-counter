@@ -8,18 +8,6 @@ namespace VictorianMoneyCounter.Views;
 
 /// <summary>
 /// View of a Victorian Wallet
-/// 
-/// 
-/// TODO: We need inter-row communication (basically an update trigger)
-///     by each row getting a reference to the row adjacent, but this is quite limited
-///     by a message bus (would be cool to implement)
-///     by a delegate function that is passed to all
-///     by a reference to wallet manager, and a pub-sub pattern with the manager about updates.  On update, it would call an update function on neccessary rows. or just on everything...
-///     ++ DenominationRowViewModel's need a public Update() function that can be called to force the row to check the values in the wallet
-///     ++ Each DenominationRowViewModel needs to be registered with the WalletPageViewModel (in a dictionary or list)
-///     ++ The WalletPageViewModel needs to have a method that is triggered that goes through the above dict/list and calls the Update() command on each item
-///     -- The WalletPageViewModel could provide a delegate function to WalletManager ..... And walletmanager stores this in a list, and calls all the delegates when it makes a change
-///         -- This delegate could already hold the list of items to be updated, meaning they get directly updated by the WalletManager essentially
 /// </summary>
 public partial class WalletPage : Page
 {

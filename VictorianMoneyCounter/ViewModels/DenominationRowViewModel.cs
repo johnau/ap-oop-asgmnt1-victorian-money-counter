@@ -145,11 +145,9 @@ public partial class DenominationRowViewModel : ObservableObject, IIndexedViewMo
     /// </summary>
     public void Update()
     {
-        Debug.WriteLine($"Update called: {Denomination} | Index: {Index}, Qty={Quantity}");
         var wallet = _WalletManager.FindWalletById(WalletId);
-
         UpdateQuantityFromWallet(wallet);
-        Debug.WriteLine($"After update: Qty={Quantity}");
+        Debug.WriteLine($">> {Denomination}={Quantity}");
     }
 
     /// <summary>

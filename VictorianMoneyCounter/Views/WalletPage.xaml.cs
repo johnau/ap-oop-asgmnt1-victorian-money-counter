@@ -6,6 +6,16 @@ using VictorianMoneyCounter.ViewModels;
 
 namespace VictorianMoneyCounter.Views;
 
+/// <summary>
+/// View of a Victorian Wallet
+/// 
+/// 
+/// TODO: We need inter-row communication (basically an update trigger)
+///     by each row getting a reference to the row adjacent, but this is quite limited
+///     by a message bus (would be cool to implement)
+///     by a delegate function that is passed to all
+///     by a reference to wallet manager, and a pub-sub pattern with the manager about updates.  On update, it would call an update function on neccessary rows. or just on everything...
+/// </summary>
 public partial class WalletPage : Page
 {
     private WalletPageViewModel _ViewModel => (WalletPageViewModel)DataContext;

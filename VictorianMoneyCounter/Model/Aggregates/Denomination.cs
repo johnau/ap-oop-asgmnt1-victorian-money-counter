@@ -9,9 +9,9 @@ public enum Denomination
     Farthing = 1
 }
 
-public readonly struct DenominationInfo(int index, string singular, string plural)
+public readonly struct DenominationInfo(int denomination, string singular, string plural)
 {
-    public int Index { get; } = index;
+    public int Denomination { get; } = denomination;
     public string Singular { get; } = singular;
     public string Plural { get; } = plural;
 }
@@ -24,14 +24,14 @@ public static class DenominationInfoFactory
         or Denomination.Crown 
         or Denomination.Shilling 
         or Denomination.Farthing => new DenominationInfo(
-                                            index:      (int)denomination, 
-                                            singular:   denomination.ToString().ToLower(), 
-                                            plural:     denomination.ToString().ToLower() + "s"
+                                            (int)denomination, 
+                                            denomination.ToString().ToLower(), 
+                                            denomination.ToString().ToLower() + "s"
         ),
         Denomination.Penny => new DenominationInfo(
-                                            index:      (int)denomination, 
-                                            singular:   "penny", 
-                                            plural:     "pence"
+                                            (int)denomination, 
+                                            "penny", 
+                                            "pence"
         ),
         _ => throw new ArgumentException("Unrecognized Denomination"),
     };

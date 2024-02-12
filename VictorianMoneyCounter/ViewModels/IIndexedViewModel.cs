@@ -1,5 +1,4 @@
-﻿
-namespace VictorianMoneyCounter.ViewModels;
+﻿namespace VictorianMoneyCounter.ViewModels;
 
 
 // TODO: Introduce an interface for ViewModels to decouple from the concrete implementations

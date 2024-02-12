@@ -11,4 +11,6 @@ public interface IWalletManager<T>
     T UpdateWallet(string id, Denomination denomination, int valueChange);
 
     bool RemoveWallet(string id);
+
+    void RegisterSubscriber(Action subscriber);
 }

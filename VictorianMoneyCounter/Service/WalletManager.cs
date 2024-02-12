@@ -7,6 +7,7 @@ public class WalletManager : IWalletManager<Wallet>
 {
     // Replace Dictionary with repository
     private readonly Dictionary<string, Wallet> _wallets = [];
+    private readonly List<Action> _subscribers = [];
 
     public WalletManager()
     {
@@ -99,9 +100,25 @@ public class WalletManager : IWalletManager<Wallet>
             throw new InvalidOperationException($"Wallet ID: {wallet.Id} is not recognized");
         }
 
-        // Fire wallet update event here?
-
         _wallets[wallet.Id] = wallet;
+
+        NotifySubscribers();
+
         return wallet;
+    }
+
+    /// <summary>
+    /// Register a subscriber delegate function to be invoked when the wallet is updated
+    /// </summary>
+    /// <param name="subscriber"></param>
+    public void RegisterSubscriber(Action subscriber) => _subscribers.Add(subscriber);
+
+    /// <summary>
+    /// Trigger delegate functions of all subscribers
+    /// </summary>
+    private void NotifySubscribers()
+    {
+        foreach (var subscriber in _subscribers)
+            subscriber.Invoke();
     }
 }

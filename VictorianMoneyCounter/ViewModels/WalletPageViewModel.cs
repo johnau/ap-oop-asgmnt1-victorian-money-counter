@@ -15,4 +15,9 @@ public partial class WalletPageViewModel : ObservableObject
     }
 
     public string WalletId { get; private set; }
+
+    public void RegisterChildViewModel(int key, IUpdatableViewModel updatableViewModel)
+    {
+        _WalletManager.RegisterSubscriber(() => updatableViewModel.Update());
+    }
 }

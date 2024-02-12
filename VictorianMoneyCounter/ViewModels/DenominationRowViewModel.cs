@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using System.Diagnostics;
 using System.Windows.Threading;
 using VictorianMoneyCounter.Model.Aggregates;
 using VictorianMoneyCounter.Service;
@@ -11,7 +12,7 @@ namespace VictorianMoneyCounter.ViewModels;
 /// ViewModel for DenominationRow UserControl.
 /// Partial class extends CommunityToolkit.Mvvm.ComponentModel.ObservableObject to provide ObservableProperty
 /// </summary>
-public partial class DenominationRowViewModel : ObservableObject, IIndexedViewModel
+public partial class DenominationRowViewModel : ObservableObject, IIndexedViewModel, IUpdatableViewModel
 {
     private readonly IWalletManager<Wallet> _WalletManager;
     private readonly ICurrencyConverter _CurrencyConverter;
@@ -24,14 +25,14 @@ public partial class DenominationRowViewModel : ObservableObject, IIndexedViewMo
     [ObservableProperty]
     public int _index;
 
-    [ObservableProperty]
-    public int _totalRows;
+    //[ObservableProperty]
+    public int TotalRows { get; set; }
 
     [ObservableProperty]
     private string _label = string.Empty;
 
     [ObservableProperty]
-    [NotifyCanExecuteChangedFor(nameof(DecreaseByOneCommand), nameof(MoveUpCommand), nameof(MoveDownCommand))]
+    [NotifyCanExecuteChangedFor(nameof(DecreaseByOneCommand), nameof(ConvertUpCommand), nameof(ConvertDownCommand))]
     private int _quantity;
 
     [ObservableProperty]
@@ -64,62 +65,62 @@ public partial class DenominationRowViewModel : ObservableObject, IIndexedViewMo
         SingularLabel = singularLabel;
         PluralLabel = pluralLabel;
         Label = pluralLabel;
-    }
 
-    partial void OnIndexChanged(int value) => HandleIndexOrTotalRowsChange();
-    partial void OnTotalRowsChanged(int value) => HandleIndexOrTotalRowsChange();
-    partial void OnQuantityChanged(int value) => Label = value == 1 ? SingularLabel : PluralLabel;
-    partial void OnLabelChanged(string? oldValue, string newValue) => Label = (oldValue == null || !oldValue.Equals(newValue)) ? StringHelpers.CapitalizeFirstLetter(newValue) : Label;
-
-    /// <summary>
-    /// This method is used to permanently disable the ability to exchange up or down for this row.
-    /// </summary>
-    private void HandleIndexOrTotalRowsChange()
-    {
         if (Index == 1) Use_ExchangeUp = false;
         if (TotalRows > 0 && Index == TotalRows) Use_ExchangeDown = false;
     }
 
+    partial void OnQuantityChanged(int value) => Label = value == 1 ? SingularLabel : PluralLabel;
+    partial void OnLabelChanged(string? oldValue, string newValue) => Label = (oldValue == null || !oldValue.Equals(newValue)) ? StringHelpers.CapitalizeFirstLetter(newValue) : Label;
+
+    /// <summary>
+    /// Increase the quantity of this row by one
+    /// </summary>
     [RelayCommand]
     private void IncreaseByOne()
     {
         var wallet = _WalletManager.UpdateWallet(WalletId, Denomination, 1);
-        UpdateQuantityFromWallet(wallet);
+        //UpdateQuantityFromWallet(wallet); // Updates now called from pub/sub to wallet updates
     }
 
+    /// <summary>
+    /// Decrease the quantity of this row by one
+    /// </summary>
     [RelayCommand(CanExecute = nameof(IsNotEmpty))]
     private void DecreaseByOne()
     {
         // Could pre-check Wallet denomination balance, but IsNotEmpty() is effectively performing that task
         var wallet = _WalletManager.UpdateWallet(WalletId, Denomination, -1); // Throws exception
-        UpdateQuantityFromWallet(wallet);
+        //UpdateQuantityFromWallet(wallet); // Updates now called from pub/sub to wallet updates
     }
 
+    /// <summary>
+    /// Converts the denomination to the next higher denomination
+    /// /// Mvvm.Input.RelayCommand for binding access with view
+    /// </summary>
     [RelayCommand(CanExecute = nameof(CanConvertUp))]
-    private void MoveUp()
+    private void ConvertUp()
     {
         var requiredQuantity = _CurrencyConverter.ConvertUp(Denomination);
         _WalletManager.UpdateWallet(WalletId, Denomination, -requiredQuantity); // Take out req'd quantity from the Wallet
         var wallet = _WalletManager.UpdateWallet(WalletId, Denomination+1, 1);
-        UpdateQuantityFromWallet(wallet);
+        //UpdateQuantityFromWallet(wallet); // Updates now called from pub/sub to wallet updates
     }
 
+    /// <summary>
+    /// Converts the denomination to the next lower denomination.
+    /// Mvvm.Input.RelayCommand for binding access with view
+    /// </summary>
     [RelayCommand(CanExecute = nameof(IsNotEmpty))]
-    private void MoveDown()
+    private void ConvertDown()
     {
         // Could pre-check Wallet denomination balance, but IsNotEmpty() is effectively performing that task
         _WalletManager.UpdateWallet(WalletId, Denomination, -1); // Take out 1 of the denomination to exchange for next lower denomination
         var convertedQuantity = _CurrencyConverter.ConvertDown(Denomination);
         var wallet = _WalletManager.UpdateWallet(WalletId, Denomination-1, convertedQuantity);
-        UpdateQuantityFromWallet(wallet);
+        //UpdateQuantityFromWallet(wallet); // Updates now called from pub/sub to wallet updates
     }
 
-    /// <summary>
-    /// Temporary helper method to update the 'Quantity' ObservableProperty -> eventually shift to message system
-    /// </summary>
-    /// <param name="wallet"></param>
-    private void UpdateQuantityFromWallet(Wallet wallet) => Quantity = WalletAccessor.Access(wallet).GetDenominationQuantity(Denomination);
-    
     /// <summary>
     /// Helper function for RelayCommand CanExecute
     /// </summary>
@@ -142,4 +143,22 @@ public partial class DenominationRowViewModel : ObservableObject, IIndexedViewMo
     {
         throw new NotImplementedException();
     }
+
+    /// <summary>
+    /// Call to force an update on the model
+    /// </summary>
+    public void Update()
+    {
+        Debug.WriteLine($"Update called: {Denomination} | Index: {Index}, Qty={Quantity}");
+        var wallet = _WalletManager.FindWalletById(WalletId);
+
+        UpdateQuantityFromWallet(wallet);
+        Debug.WriteLine($"After update: Qty={Quantity}");
+    }
+
+    /// <summary>
+    /// Temporary helper method to update the 'Quantity' ObservableProperty -> eventually shift to message system
+    /// </summary>
+    /// <param name="wallet"></param>
+    private void UpdateQuantityFromWallet(Wallet wallet) => Quantity = WalletAccessor.Access(wallet).GetDenominationQuantity(Denomination);
 }

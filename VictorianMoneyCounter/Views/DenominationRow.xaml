@@ -112,7 +112,7 @@
                 Grid.Column="1" 
                 Style="{StaticResource MoveDownButton}" 
                 Visibility="{Binding Use_ExchangeDown, Converter={StaticResource BoolToVisConverter}, ConverterParameter=Hidden}" 
-                Command="{Binding MoveDownCommand}" />
+                Command="{Binding ConvertDownCommand}" />
             <StackPanel 
                 Grid.Column="2" 
                 HorizontalAlignment="Center" 
@@ -133,7 +133,7 @@
                 Grid.Column="3" 
                 Style="{StaticResource MoveUpButton}" 
                 Visibility="{Binding Use_ExchangeUp, Converter={StaticResource BoolToVisConverter}, ConverterParameter=Hidden}" 
-                Command="{Binding MoveUpCommand}" />
+                Command="{Binding ConvertUpCommand}" />
             <Button 
                 Content="＋" 
                 Grid.Column="4" 

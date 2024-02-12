@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using System.Windows.Threading;
 using VictorianMoneyCounter.Model.Aggregates;
 using VictorianMoneyCounter.Service;
 using VictorianMoneyCounter.Utilities;
@@ -14,7 +15,7 @@ public partial class DenominationRowViewModel : ObservableObject, IIndexedViewMo
 {
     private readonly IWalletManager<Wallet> _WalletManager;
     private readonly ICurrencyConverter _CurrencyConverter;
-
+    private readonly DispatcherTimer _actionHoldTimer;
     public Denomination Denomination { get; set; }
     public string SingularLabel { get; set; } = string.Empty;
     public string PluralLabel { get; set; } = string.Empty;
@@ -42,11 +43,18 @@ public partial class DenominationRowViewModel : ObservableObject, IIndexedViewMo
     [ObservableProperty]
     public bool _canExchange = true;
 
+    [ObservableProperty]
+    public Dictionary<string, bool> _actionHeld = [];
+
     public DenominationRowViewModel(IWalletManager<Wallet> walletManager, ICurrencyConverter currencyConverter)
     {
         _WalletManager = walletManager;
         _CurrencyConverter = currencyConverter;
+        _actionHoldTimer = new DispatcherTimer();
+        _actionHoldTimer.Interval = TimeSpan.FromMilliseconds(50);
+        _actionHoldTimer.Tick += HoldAction;
     }
+
     public void Configure(Denomination denomination, string walletId, int index, int totalRows, string singularLabel, string pluralLabel)
     {
         Denomination = denomination;
@@ -91,7 +99,7 @@ public partial class DenominationRowViewModel : ObservableObject, IIndexedViewMo
     private void MoveUp()
     {
         var requiredQuantity = _CurrencyConverter.ConvertUp(Denomination);
-        _WalletManager.UpdateWallet(WalletId, Denomination, -requiredQuantity); // take out req'd qty from wallet
+        _WalletManager.UpdateWallet(WalletId, Denomination, -requiredQuantity); // Take out req'd quantity from the Wallet
         var wallet = _WalletManager.UpdateWallet(WalletId, Denomination+1, 1);
         UpdateQuantityFromWallet(wallet);
     }
@@ -100,7 +108,7 @@ public partial class DenominationRowViewModel : ObservableObject, IIndexedViewMo
     private void MoveDown()
     {
         // Could pre-check Wallet denomination balance, but IsNotEmpty() is effectively performing that task
-        _WalletManager.UpdateWallet(WalletId, Denomination, -1); // take out 1 of the denomination to convert down
+        _WalletManager.UpdateWallet(WalletId, Denomination, -1); // Take out 1 of the denomination to exchange for next lower denomination
         var convertedQuantity = _CurrencyConverter.ConvertDown(Denomination);
         var wallet = _WalletManager.UpdateWallet(WalletId, Denomination-1, convertedQuantity);
         UpdateQuantityFromWallet(wallet);
@@ -116,12 +124,22 @@ public partial class DenominationRowViewModel : ObservableObject, IIndexedViewMo
     /// Helper function for RelayCommand CanExecute
     /// </summary>
     /// <returns>True if Quantity is greater than 0, else False</returns>
-    private bool IsNotEmpty() => Quantity > 0;
+    private bool IsNotEmpty() => Quantity > 0; // Should this ref the wallet instead of Quantity
 
     /// <summary>
     /// Helper function for RelayCommand CanExecute
     /// </summary>
     /// <returns>True if Quantity is greater than or equal to required amount for converting to larger denomination</returns>
-    private bool CanConvertUp() => Quantity >= _CurrencyConverter.ConvertUp(Denomination);
+    private bool CanConvertUp() => Quantity > 0 && Quantity >= _CurrencyConverter.ConvertUp(Denomination); // Should this ref the wallet instead of Quantity
 
+    /// <summary>
+    /// Method that carries out actions every timer tick, to allow sustained actions (ie. when a user clicks and holds the button)
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    /// <exception cref="NotImplementedException"></exception>
+    private void HoldAction(object? sender, EventArgs e)
+    {
+        throw new NotImplementedException();
+    }
 }

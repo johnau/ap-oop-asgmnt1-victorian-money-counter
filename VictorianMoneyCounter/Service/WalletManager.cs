@@ -12,6 +12,12 @@ public class WalletManager : IWalletManager<Wallet>
     {
         CreateWallet(); // default wallet
     }
+
+    /// <summary>
+    /// Create a new Wallet
+    /// </summary>
+    /// <returns>The ID of the created Wallet</returns>
+    /// <exception cref="Exception"></exception>
     public string CreateWallet()
     {
         var wallet = new Wallet();
@@ -33,10 +39,11 @@ public class WalletManager : IWalletManager<Wallet>
     /// <exception cref="Exception"></exception>
     public Wallet FindWalletById(string id = "")
     {
+        if (_wallets.Count == 0)
+            throw new Exception("Internal error"); // There should always be a wallet
+
         if (id == null || id == string.Empty)
         {
-            if (_wallets.Count == 0) 
-                throw new Exception("Internal error"); // There should always be a wallet
             return _wallets.Values.First<Wallet>();
         }
 
@@ -44,6 +51,19 @@ public class WalletManager : IWalletManager<Wallet>
             throw new Exception("No wallet with that ID");
         else
             return wallet;
+    }
+
+    /// <summary>
+    /// Destroy a Wallet
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns>True if the wallet was successfully removed, False if not</returns>
+    public bool RemoveWallet(string id)
+    {
+        if (!_wallets.ContainsKey(id))
+            return false;
+        
+        return _wallets.Remove(id);
     }
 
     /// <summary>

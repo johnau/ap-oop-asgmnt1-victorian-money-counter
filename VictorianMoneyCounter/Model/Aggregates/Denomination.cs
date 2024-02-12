@@ -20,18 +20,16 @@ public static class DenominationInfoFactory
 {
     public static DenominationInfo GetDenominationInfo(Denomination denomination) => denomination switch
     {
-        Denomination.Pound 
-        or Denomination.Crown 
-        or Denomination.Shilling 
-        or Denomination.Farthing => new DenominationInfo(
-                                            (int)denomination, 
-                                            denomination.ToString().ToLower(), 
-                                            denomination.ToString().ToLower() + "s"
+        Denomination.Pound or
+        Denomination.Crown or
+        Denomination.Shilling or
+        Denomination.Farthing => new DenominationInfo((int)denomination,
+                                                        denomination.ToString().ToLower(), 
+                                                        denomination.ToString().ToLower() + "s"
         ),
-        Denomination.Penny => new DenominationInfo(
-                                            (int)denomination, 
-                                            "penny", 
-                                            "pence"
+        Denomination.Penny => new DenominationInfo((int)denomination, 
+                                                        "penny", 
+                                                        "pence"
         ),
         _ => throw new ArgumentException("Unrecognized Denomination"),
     };

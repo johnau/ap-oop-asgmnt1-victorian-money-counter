@@ -1,5 +1,8 @@
 ﻿namespace VictorianMoneyCounter.Model.Aggregates;
 
+/// <summary>
+/// Helper class to interact with Wallet record
+/// </summary>
 public class WalletAccessor
 {
     public static WalletAccessor Access(Wallet wallet)

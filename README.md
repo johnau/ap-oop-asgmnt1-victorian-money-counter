@@ -13,27 +13,37 @@ Entry point is in App.xaml.cs > App()
 
 Object graph is registered to Container
 
-App.xaml.cs > OnStartup(StartupEventArgs e) launches MainWindow
+App.xaml.cs > OnStartup(StartupEventArgs e) creates Wallet with IWalletManager and launches MainWindow
 
-MainWindow has instance of MainPage Factory and creates an instance of MainPage 
+MainWindow code behind is injected with instance of IAbstractFactory<WalletPage> and creates an instance of WalletPage 
 
-MainPage is injected with new instance of MainPageViewModel, which in turn is injected with the instance of IWalletManager<Wallet>
+WalletPage is injected with new instance of WalletPageViewModel, which in turn is injected with the `Singleton` instance of IWalletManager<Wallet>
 
-MainPageViewModel creates a new Wallet for itself with IWalletManager.
+WalletPageViewModel accesses Wallet from IWalletManager (currently by grabbing the first and only wallet - multiple wallets not yet handled properly).
 
-**********
-Should the MainPageViewModel be creating the wallet?
-Should a wallet being created be an event that is listened to by the view components, and as a result a new page spins up?
+WalletPage has an instance of the IAbstractFactory<DenominationRow> and creates required instances of the DenominationRows(5), which in turn are each injected with transient instances of DenominationRowViewModel objects.
 
-When the program starts up, a wallet can be created (always need at least one).  At this point, when the views load up, the MainPageViewModel can grab the first (and only) Wallet in the holder.  (In future if permanent data store is introduced, it can grab the first, and if there are more, other windows  can be automatically opened)
+-------------------
+## Model layer
 
-Once the wallet is created it can either announce its creation through message system... could create simple one or work out the one in Mvvm toolkit... 
-ie.  
-User presses Ctrl + N, New window is created, new MainPage is created.
-Then request for new wallet is sent. New wallet is created, message response with ID.
+The Wallet model is implemented as an immutable record, and includes simple protections to prevent illegal operations/results.
+A WalletAccessor helper class has also been included for some basic interactions/adaptions to the Wallet record
 
-**********
+-------------------
+## Service layer
 
-MainPage has an instance of the Row Factory and creates required instances of the DenominationRows, which in turn are each injected with transient instances of DenominationRowViewModel objects.
+ICurrencyConverter and IWalletManager implementations
 
+*** IValueCalculator service may also live here - required for next step
+
+-------------------
+## StartupHelpers
+
+Some boilerplate for .Net Dependency Injection
+
+-------------------
+
+## CommunityToolkit.Mvvm
+
+ViewModel properties for binding are annotated with the ObservableProperty attribute, generating appropriate code for the property to use for Binding from XAML views.  RelayCommands are used on functions required for Binding from XAML views, CanExecute is employed to restrict access to controls to suit project brief.
 

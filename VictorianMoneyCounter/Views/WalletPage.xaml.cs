@@ -43,6 +43,7 @@ public partial class WalletPage : Page, IViewModelBacked<WalletPageViewModel>
         Loaded += ConfigureTotalRow;
         Loaded += ConfigureDenominationRows;
         Loaded += ConfigureShortcuts;
+        Unloaded += Cleanup;
     }
 
     /// <summary>
@@ -54,7 +55,7 @@ public partial class WalletPage : Page, IViewModelBacked<WalletPageViewModel>
         var config = new BasicViewModelConfiguration(ViewModel.WalletId);
         totalRow.GetViewModel().Configure(config);
 
-        ViewModel.RegisterChildViewModel(int.MaxValue, totalRow.GetViewModel());
+        ViewModel.RegisterChildViewModel(totalRow.GetViewModel());
         
         MainLayoutGrid.Children.Add(totalRow);
         Grid.SetRow(totalRow, 0);
@@ -80,7 +81,7 @@ public partial class WalletPage : Page, IViewModelBacked<WalletPageViewModel>
                                                                 PluralLabel: DenominationInfoFactory.GetDenominationInfo(d).Plural);
             denominationRow.GetViewModel().Configure(config);
 
-            ViewModel.RegisterChildViewModel((int)d, denominationRow.GetViewModel()); // var i could also be key
+            ViewModel.RegisterChildViewModel(denominationRow.GetViewModel()); // var i could also be key
 
             MainLayoutGrid.Children.Add(denominationRow);
             Grid.SetRow(denominationRow, i++);
@@ -99,9 +100,14 @@ public partial class WalletPage : Page, IViewModelBacked<WalletPageViewModel>
             }
         };
     }
+    
+    public WalletPageViewModel GetViewModel() => ViewModel;
 
-    public WalletPageViewModel GetViewModel()
+    /// <summary>
+    /// Cleanup and Unregister subscriptions
+    /// </summary>
+    private void Cleanup(object sender, RoutedEventArgs e)
     {
-        return ViewModel;
+        ViewModel.UnregisterChildViewModels();
     }
 }

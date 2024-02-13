@@ -12,8 +12,5 @@ public partial class TotalRow : UserControl, IViewModelBacked<TotalRowViewModel>
         InitializeComponent();
     }
 
-    public TotalRowViewModel GetViewModel()
-    {
-        return ViewModel;
-    }
+    public TotalRowViewModel GetViewModel() => ViewModel;
 }

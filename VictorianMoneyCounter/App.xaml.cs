@@ -46,6 +46,7 @@ public partial class App : Application
     {
         await AppHost!.StartAsync();
 
+        // Should we create the wallet here?
         var walletManager = AppHost.Services.GetRequiredService<IWalletManager<Wallet>>();
         walletManager.CreateWallet();
 

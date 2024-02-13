@@ -12,5 +12,7 @@ public interface IWalletManager<T>
 
     bool RemoveWallet(string id);
 
-    void RegisterSubscriber(Action subscriber);
+    void RegisterSubscriber(string key, Action subscriber);
+
+    void UnregisterSubscribers(string key);
 }

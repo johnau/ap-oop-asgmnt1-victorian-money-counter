@@ -18,9 +18,6 @@ public partial class DenominationRow : UserControl, IViewModelBacked<Denominatio
         InitializeComponent();
     }
 
-    public DenominationRowViewModel GetViewModel()
-    {
-        return ViewModel;
-    }
+    public DenominationRowViewModel GetViewModel() => ViewModel;
 
 }

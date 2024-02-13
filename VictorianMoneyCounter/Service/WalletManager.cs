@@ -7,11 +7,12 @@ public class WalletManager : IWalletManager<Wallet>
 {
     // Replace Dictionary with repository
     private readonly Dictionary<string, Wallet> _wallets = [];
-    private readonly List<Action> _subscribers = [];
+    //private readonly List<Action> _subscribers = [];
+    private readonly Dictionary<string, List<Action>> _subscribers = []; // subscribers stored against walletId
 
     public WalletManager()
     {
-        CreateWallet(); // create a default wallet - or check for existing wallets from repository
+        // CreateWallet(); // create a default wallet - or check for existing wallets from repository
     }
 
     /// <summary>
@@ -22,7 +23,8 @@ public class WalletManager : IWalletManager<Wallet>
     public string CreateWallet()
     {
         var wallet = new Wallet();
-        if (_wallets.TryAdd(wallet.Id, wallet))
+        if (_wallets.TryAdd(wallet.Id, wallet) && 
+            _subscribers.TryAdd(wallet.Id, []))
         {
             Debug.WriteLine("Created a new Wallet: " + wallet.Id);
             return wallet.Id;
@@ -103,25 +105,53 @@ public class WalletManager : IWalletManager<Wallet>
         _wallets[wallet.Id] = wallet;
 
         //Debug.WriteLine("==Wallet Update==");
-        NotifySubscribers();
+        NotifySubscribers(wallet.Id);
 
         return wallet;
     }
 
     /// <summary>
-    /// Register a subscriber delegate function to be invoked when the wallet is updated
+    /// Register a subscriber delegate function to be invoked when the wallet is updated.
     /// </summary>
     /// <param name="subscriber"></param>
-    public void RegisterSubscriber(Action subscriber) => _subscribers.Add(subscriber);
+    //public void RegisterSubscriber(string walletId, Action subscriber) => _subscribers.Add(subscriber);
+    public void RegisterSubscriber(string walletId, Action subscriber)
+    {
+        if (!_subscribers.TryGetValue(walletId, out var value))
+            throw new InvalidOperationException($"Unrecognized Wallet ID: {walletId}");
+
+        value.Add(subscriber);
+    }
+
+    /// <summary>
+    /// Unregister subscriber delegate functions for Wallet ID
+    /// </summary>
+    /// <param name="walletId"></param>
+    public void UnregisterSubscribers(string walletId)
+    {
+        if (!_subscribers.ContainsKey(walletId))
+            // Wallet does not exist
+            return;
+
+        _subscribers.Remove(walletId);
+    }
 
     /// <summary>
     /// Trigger delegate functions of all subscribers
     /// </summary>
-    private void NotifySubscribers()
+    private void NotifySubscribers(string walletId)
     {
         // TODO: Optimize notifying subscribers to only notify subscribers that will care
         // ie. no point calling an update on every row if only one row needs to be updated.
-        foreach (var subscriber in _subscribers)
-            subscriber.Invoke();
+        //
+        // subscribers should be grouped by wallet, right now all wallets are updating on any wallet change
+
+        //foreach (var subscriber in _subscribers)
+        //    subscriber.Invoke();
+
+        if (!_subscribers.TryGetValue(walletId, out var subscribersList))
+            throw new InvalidOperationException("Unrecognized Wallet ID");
+
+        subscribersList.ForEach(s => s.Invoke());
     }
 }

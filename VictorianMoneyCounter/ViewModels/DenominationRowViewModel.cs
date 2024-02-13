@@ -1,7 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using Microsoft.Extensions.Configuration;
-using System.Diagnostics;
 using System.Windows.Threading;
 using VictorianMoneyCounter.Model.Aggregates;
 using VictorianMoneyCounter.Service;
@@ -12,9 +10,6 @@ namespace VictorianMoneyCounter.ViewModels;
 /// <summary>
 /// ViewModel for DenominationRow UserControl.
 /// Partial class extends CommunityToolkit.Mvvm.ComponentModel.ObservableObject to provide ObservableProperty
-/// 
-/// TO DO: Need an IConfigurableViewModel<C> interface where C is type of Configuration Object (object that has 
-/// required fields for configuration)
 /// </summary>
 public partial class DenominationRowViewModel : ObservableObject, IIndexedViewModel, IUpdatableViewModel, IConfigurableViewModel<DenominationRowViewModelConfiguration>
 {
@@ -45,8 +40,8 @@ public partial class DenominationRowViewModel : ObservableObject, IIndexedViewMo
     [ObservableProperty]
     public bool _canExchange = true;
 
-    //public Dictionary<IRelayCommand, bool> _actionHeld = []; // removed - only allow one
     public IRelayCommand? _actionHeld;
+    //public Dictionary<IRelayCommand, bool> _actionHeld = []; // removed - only allow one
 
     /// <summary>
     /// Primary constructor
@@ -125,8 +120,13 @@ public partial class DenominationRowViewModel : ObservableObject, IIndexedViewMo
         _WalletManager.UpdateWallet(WalletId, Denomination-1, convertedQuantity);
     }
 
+    /// <summary>
+    /// Command used by all buttons to activate "action hold"
+    /// </summary>
+    /// <param name="command"></param>
+    /// <param name="token"></param>
+    /// <returns></returns>
     [RelayCommand(IncludeCancelCommand = true)] // As an async task, do we AllowConcurrentTransactions = true, IncludeCancelCommand = true (HoldActionCancelCommand created) and provide Cancellation token
-
     private async Task HoldAction(IRelayCommand command, CancellationToken token)
     {
         try
@@ -135,11 +135,16 @@ public partial class DenominationRowViewModel : ObservableObject, IIndexedViewMo
             _actionHoldTimer.Start();
             _actionHeld = command;
         }
-        catch (OperationCanceledException) {
+        catch (OperationCanceledException) 
+        {
             ReleaseAction(command);
         }
     }
 
+    /// <summary>
+    /// Command used by all buttons to deactivate "action hold"
+    /// </summary>
+    /// <param name="command"></param>
     [RelayCommand]
     private void ReleaseAction(IRelayCommand command)
     {
@@ -165,15 +170,8 @@ public partial class DenominationRowViewModel : ObservableObject, IIndexedViewMo
     public void Update()
     {
         var wallet = _WalletManager.FindWallet(WalletId);
-        UpdateQuantityFromWallet(wallet);
-        //Debug.WriteLine($">> {Denomination}={Quantity}");
+        Quantity = WalletAccessor.Access(wallet).GetDenominationQuantity(Denomination);
     }
-
-    /// <summary>
-    /// Temporary helper method to update the 'Quantity' ObservableProperty -> eventually shift to message system
-    /// </summary>
-    /// <param name="wallet"></param>
-    private void UpdateQuantityFromWallet(Wallet wallet) => Quantity = WalletAccessor.Access(wallet).GetDenominationQuantity(Denomination);
 
     private void TimerTickAction(object? sender, EventArgs e)
     {
@@ -181,6 +179,5 @@ public partial class DenominationRowViewModel : ObservableObject, IIndexedViewMo
         {
             _actionHeld.Execute(null);
         }
-
     }
 }

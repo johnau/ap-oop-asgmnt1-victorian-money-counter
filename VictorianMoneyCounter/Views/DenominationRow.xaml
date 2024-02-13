@@ -39,14 +39,14 @@
             <Setter Property="Padding" Value="25" />
             <Setter Property="Content">
                 <Setter.Value>
-                    <Image Source="pack://application:,,,/VictorianMoneyCounter;component\Assets\ButtonImages\downArrowEnabled.png" />
+                    <Image Source="pack://application:,,,/VictorianMoneyCounter;component/Assets/ButtonImages/downArrowEnabled.png" />
                 </Setter.Value>
             </Setter>
             <Style.Triggers>
                 <Trigger Property="IsEnabled" Value="False">
                     <Setter Property="Content">
                         <Setter.Value>
-                            <Image Source="pack://application:,,,/VictorianMoneyCounter;component\Assets\ButtonImages\downArrowDisabled.png" />
+                            <Image Source="pack://application:,,,/VictorianMoneyCounter;component/Assets/ButtonImages/downArrowDisabled.png" />
                         </Setter.Value>
                     </Setter>
                 </Trigger>
@@ -56,14 +56,14 @@
             <Setter Property="Padding" Value="25" />
             <Setter Property="Content">
                 <Setter.Value>
-                    <Image Source="pack://application:,,,/VictorianMoneyCounter;component\Assets\ButtonImages\upArrowEnabled.png" />
+                    <Image Source="pack://application:,,,/VictorianMoneyCounter;component/Assets/ButtonImages/upArrowEnabled.png" />
                 </Setter.Value>
             </Setter>
             <Style.Triggers>
                 <Trigger Property="IsEnabled" Value="False">
                     <Setter Property="Content">
                         <Setter.Value>
-                            <Image Source="pack://application:,,,/VictorianMoneyCounter;component\Assets\ButtonImages\upArrowDisabled.png" />
+                            <Image Source="pack://application:,,,/VictorianMoneyCounter;component/Assets/ButtonImages/upArrowDisabled.png" />
                         </Setter.Value>
                     </Setter>
                 </Trigger>

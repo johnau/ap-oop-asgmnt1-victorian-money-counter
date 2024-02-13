@@ -40,10 +40,20 @@ public partial class WalletPage : Page, IViewModelBacked<WalletPageViewModel>
         _DenominationRowFactory = denominationRowFactory;
         _TotalRowFactory = totalRowFactory;
         InitializeComponent();
+        Loaded += ConfigureWindow;
         Loaded += ConfigureTotalRow;
         Loaded += ConfigureDenominationRows;
         Loaded += ConfigureShortcuts;
         Unloaded += Cleanup;
+    }
+
+    private void ConfigureWindow(object sender, RoutedEventArgs e)
+    {
+        var window = Window.GetWindow(this);
+        if (window != null)
+        {
+            window.Title += $" - {ViewModel.WalletId}";
+        }
     }
 
     /// <summary>

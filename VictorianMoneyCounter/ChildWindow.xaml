@@ -5,5 +5,6 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:VictorianMoneyCounter"
         mc:Ignorable="d"
-        Title="Victorian Money Counter" MinHeight="840" MinWidth="600" Height="840" Width="600">
+        Title="Victorian Money Counter" MinHeight="840" MinWidth="600" Height="840" Width="600"
+        Icon="pack://application:,,,/VictorianMoneyCounter;component/Assets/Icons/pound.ico">
 </Window>

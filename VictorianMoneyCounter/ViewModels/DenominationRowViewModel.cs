@@ -44,6 +44,11 @@ public partial class DenominationRowViewModel : ObservableObject, IIndexedViewMo
     // replace this with a single property (IRelayCommand) to avoid two items moving together
     public Dictionary<IRelayCommand, bool> _actionHeld = [];
 
+    /// <summary>
+    /// Primary constructor
+    /// </summary>
+    /// <param name="walletManager"></param>
+    /// <param name="currencyConverter"></param>
     public DenominationRowViewModel(IWalletManager<Wallet> walletManager, ICurrencyConverter currencyConverter)
     {
         _WalletManager = walletManager;

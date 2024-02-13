@@ -2,7 +2,7 @@
 
 namespace VictorianMoneyCounter.Service;
 
-public class CurrencyConverter : ICurrencyConverter
+public class BasicCurrencyConverter : ICurrencyConverter
 {
     /// <summary>
     /// Currency conversion from smaller to larger denomination
@@ -42,4 +42,8 @@ public class CurrencyConverter : ICurrencyConverter
         };
     }
 
+    public int Convert(Denomination fromDenomination, Denomination toDenomination, int ammount = 1)
+    {
+        throw new NotImplementedException();
+    }
 }

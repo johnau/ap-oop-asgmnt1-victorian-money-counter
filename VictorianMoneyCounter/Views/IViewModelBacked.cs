@@ -1,6 +1,6 @@
 ﻿namespace VictorianMoneyCounter.Views;
 
-public interface IDenominationRow<Vm>
+public interface IViewModelBacked<Vm>
 {
     Vm GetViewModel();
 }

@@ -20,7 +20,7 @@ public partial class App : Application
             .ConfigureServices((hostContext, services) =>
             {
                 services.AddSingleton<IWalletManager<Wallet>, WalletManager>();
-                services.AddTransient<ICurrencyConverter, CurrencyConverter>();
+                services.AddTransient<ICurrencyConverter, BasicCurrencyConverter>();
 
                 services.AddSingleton<MainWindow>();
                 services.AddGenericFactory<ChildWindow>(); // Child window is same as MainWindow, could be removed

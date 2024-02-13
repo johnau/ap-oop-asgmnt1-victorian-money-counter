@@ -1,11 +1,9 @@
-﻿using System.Diagnostics;
-using System.Windows.Controls;
-using System.Windows.Input;
+﻿using System.Windows.Controls;
 using VictorianMoneyCounter.ViewModels;
 
 namespace VictorianMoneyCounter.Views;
 
-public partial class DenominationRow : UserControl, IDenominationRow<DenominationRowViewModel>
+public partial class DenominationRow : UserControl, IViewModelBacked<DenominationRowViewModel>
 {
     private DenominationRowViewModel ViewModel => (DenominationRowViewModel) DataContext;
     

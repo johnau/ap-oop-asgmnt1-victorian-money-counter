@@ -6,3 +6,4 @@
 using System.Diagnostics.CodeAnalysis;
 
 [assembly: SuppressMessage("Style", "IDE0290:Use primary constructor", Justification = "<Pending>", Scope = "member", Target = "~M:VictorianMoneyCounter.ViewModels.DenominationRowViewModel.#ctor(VictorianMoneyCounter.Service.IWalletManager{VictorianMoneyCounter.Model.Aggregates.Wallet},VictorianMoneyCounter.Service.ICurrencyConverter)")]
+[assembly: SuppressMessage("Style", "IDE0290:Use primary constructor", Justification = "<Pending>", Scope = "member", Target = "~M:VictorianMoneyCounter.ViewModels.TotalRowViewModel.#ctor(VictorianMoneyCounter.Service.IWalletManager{VictorianMoneyCounter.Model.Aggregates.Wallet},VictorianMoneyCounter.Service.ICurrencyConverter)")]

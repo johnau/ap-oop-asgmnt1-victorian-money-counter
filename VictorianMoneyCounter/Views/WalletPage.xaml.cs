@@ -43,13 +43,16 @@ public partial class WalletPage : Page
 
     private void ConfigurePage(object sender, RoutedEventArgs e)
     {
+        ConfigureTotalRow();
         ConfigureDenominationRows();
-        ConfigureTotalRows();
     }
 
-    private void ConfigureTotalRows()
+    private void ConfigureTotalRow()
     {
         var totalRow = _TotalRowFactory.Create();
+        totalRow.GetViewModel().WalletId = ViewModel.WalletId;
+        MainLayoutGrid.Children.Add(totalRow);
+        Grid.SetRow(totalRow, 0);
     }
 
     private void ConfigureDenominationRows()

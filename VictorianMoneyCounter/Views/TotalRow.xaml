@@ -13,7 +13,7 @@
             <!-- Why does this apply to all TextBlocks here, but on UserControl it does not and is instead overriden by the named style? -->
             <Setter Property="HorizontalAlignment" Value="Center" />
             <Setter Property="FontSize" Value="24" />
-            <Setter Property="LineHeight" Value="10" />
+            <Setter Property="LineHeight" Value="16" />
             <Setter Property="LineStackingStrategy" Value="BlockLineHeight" />
         </Style>
         <Style x:Key="LargeText" TargetType="TextBlock">

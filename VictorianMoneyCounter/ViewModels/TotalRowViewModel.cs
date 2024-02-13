@@ -54,10 +54,18 @@ public partial class TotalRowViewModel : ObservableObject, IUpdatableViewModel
             quantities.Add(d, q);
         }
 
-        var s = string.Join(" ", quantities.Select((kvp, index) =>
+        // consolidate quantities dictionary to largest denominations
+        var consolidated = _CurrencyConverter.ConsolidateQuantities(quantities);
+
+        TotalString = string.Join(" ", consolidated.Select((kvp, index) =>
             index == 0 ? $"{DenominationInfoFactory.GetDenominationInfo(kvp.Key).Symbol}{kvp.Value}" :
                             $"{kvp.Value}{DenominationInfoFactory.GetDenominationInfo(kvp.Key).Symbol}"));
-        TotalString = s;
+
+        var totalItems = consolidated.Values.Sum();
+        if (totalItems == 0)
+        {
+            TotalString += " :(";
+        }
     }
 
 }

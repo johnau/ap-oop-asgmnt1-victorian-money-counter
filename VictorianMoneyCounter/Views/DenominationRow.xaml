@@ -35,6 +35,25 @@
             <Setter Property="BorderThickness" Value="0" />
             <Setter Property="Background" Value="Transparent" />
             <Setter Property="FontWeight" Value="ExtraBold" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Center"
+                                              VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="Background" Value="Transparent"/>
+                                <Setter Property="Foreground" Value="Gray"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>            
         </Style>
         <Style x:Key="MoveDownButton" TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
             <Setter Property="Padding" Value="25" />

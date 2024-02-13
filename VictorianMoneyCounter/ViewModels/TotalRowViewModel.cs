@@ -46,13 +46,18 @@ public partial class TotalRowViewModel : ObservableObject, IUpdatableViewModel
     private void UpdateQuantitiesFromWallet(Wallet wallet)
     {
         var quantities = new Dictionary<Denomination, int>();
-        foreach (Denomination d in Enum.GetValues(typeof(Denomination)))
+        var _ = Enum.GetValues(typeof(Denomination));
+        Array.Reverse(_);
+        foreach (Denomination d in _)
         {
             var q = WalletAccessor.Access(wallet).GetDenominationQuantity(d);
             quantities.Add(d, q);
         }
 
-        var s = string.Join(" ", quantities.Select(kvp => $"{kvp.Key}: {kvp.Value}"));
+        var s = string.Join(" ", quantities.Select((kvp, index) =>
+            index == 0 ? $"{DenominationInfoFactory.GetDenominationInfo(kvp.Key).Symbol}{kvp.Value}" :
+                            $"{kvp.Value}{DenominationInfoFactory.GetDenominationInfo(kvp.Key).Symbol}"));
+        TotalString = s;
     }
 
 }

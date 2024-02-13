@@ -51,6 +51,9 @@ public partial class WalletPage : Page
     {
         var totalRow = _TotalRowFactory.Create();
         totalRow.GetViewModel().WalletId = ViewModel.WalletId;
+
+        ViewModel.RegisterChildViewModel(int.MaxValue, totalRow.GetViewModel());
+        
         MainLayoutGrid.Children.Add(totalRow);
         Grid.SetRow(totalRow, 0);
     }
@@ -73,7 +76,7 @@ public partial class WalletPage : Page
                 pluralLabel: DenominationInfoFactory.GetDenominationInfo(d).Plural
                 );
 
-            ViewModel.RegisterChildViewModel((int)d, denominationRow.GetViewModel()); // i could also be key
+            ViewModel.RegisterChildViewModel((int)d, denominationRow.GetViewModel()); // var i could also be key
 
             MainLayoutGrid.Children.Add(denominationRow);
             Grid.SetRow(denominationRow, i++);

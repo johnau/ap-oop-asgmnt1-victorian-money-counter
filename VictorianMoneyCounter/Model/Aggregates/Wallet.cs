@@ -1,5 +1,15 @@
 ﻿namespace VictorianMoneyCounter.Model.Aggregates;
 
+/// <summary>
+/// Wallet Record object
+/// Immutable, Builder pattern
+/// Illegal transactions are silently ignored, ie. a result to take 5 when there is only 4 will result in no change.
+/// </summary>
+/// <param name="Pounds"></param>
+/// <param name="Crowns"></param>
+/// <param name="Shillings"></param>
+/// <param name="Pence"></param>
+/// <param name="Farthings"></param>
 public record Wallet(int Pounds = 0, int Crowns = 0, int Shillings = 0, int Pence = 0, int Farthings = 0)
 {
     public string Id { get; } = Guid.NewGuid().ToString();

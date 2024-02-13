@@ -107,6 +107,12 @@
                     <behaviors:EventTrigger EventName="PreviewMouseDown">
                         <behaviors:InvokeCommandAction Command="{Binding HoldActionCommand}" CommandParameter="{Binding DecreaseByOneCommand}" />
                     </behaviors:EventTrigger>
+                    <behaviors:EventTrigger EventName="LostMouseCapture">
+                        <behaviors:InvokeCommandAction Command="{Binding HoldActionCancelCommand}" CommandParameter="{Binding DecreaseByOneCommand}" />
+                    </behaviors:EventTrigger>
+                    <behaviors:EventTrigger EventName="MouseLeave">
+                        <behaviors:InvokeCommandAction Command="{Binding ReleaseActionCommand}" CommandParameter="{Binding DecreaseByOneCommand}" />
+                    </behaviors:EventTrigger>
                     <behaviors:EventTrigger EventName="PreviewMouseUp">
                         <behaviors:InvokeCommandAction Command="{Binding ReleaseActionCommand}" CommandParameter="{Binding DecreaseByOneCommand}" />
                     </behaviors:EventTrigger>
@@ -125,6 +131,12 @@
                 <behaviors:Interaction.Triggers>
                     <behaviors:EventTrigger EventName="PreviewMouseDown">
                         <behaviors:InvokeCommandAction Command="{Binding HoldActionCommand}" CommandParameter="{Binding ConvertDownCommand}" />
+                    </behaviors:EventTrigger>
+                    <behaviors:EventTrigger EventName="LostMouseCapture">
+                        <behaviors:InvokeCommandAction Command="{Binding HoldActionCancelCommand}" CommandParameter="{Binding ConvertDownCommand}" />
+                    </behaviors:EventTrigger>
+                    <behaviors:EventTrigger EventName="MouseLeave">
+                        <behaviors:InvokeCommandAction Command="{Binding ReleaseActionCommand}" CommandParameter="{Binding ConvertDownCommand}" />
                     </behaviors:EventTrigger>
                     <behaviors:EventTrigger EventName="PreviewMouseUp">
                         <behaviors:InvokeCommandAction Command="{Binding ReleaseActionCommand}" CommandParameter="{Binding ConvertDownCommand}" />
@@ -156,6 +168,12 @@
                     <behaviors:EventTrigger EventName="PreviewMouseDown">
                         <behaviors:InvokeCommandAction Command="{Binding HoldActionCommand}" CommandParameter="{Binding ConvertUpCommand}" />
                     </behaviors:EventTrigger>
+                    <behaviors:EventTrigger EventName="LostMouseCapture">
+                        <behaviors:InvokeCommandAction Command="{Binding HoldActionCancelCommand}" CommandParameter="{Binding ConvertUpCommand}" />
+                    </behaviors:EventTrigger>
+                    <behaviors:EventTrigger EventName="MouseLeave">
+                        <behaviors:InvokeCommandAction Command="{Binding ReleaseActionCommand}" CommandParameter="{Binding ConvertUpCommand}" />
+                    </behaviors:EventTrigger>                
                     <behaviors:EventTrigger EventName="PreviewMouseUp">
                         <behaviors:InvokeCommandAction Command="{Binding ReleaseActionCommand}" CommandParameter="{Binding ConvertUpCommand}" />
                     </behaviors:EventTrigger>
@@ -169,6 +187,12 @@
                 <behaviors:Interaction.Triggers>
                     <behaviors:EventTrigger EventName="PreviewMouseDown">
                         <behaviors:InvokeCommandAction Command="{Binding HoldActionCommand}" CommandParameter="{Binding IncreaseByOneCommand}" />
+                    </behaviors:EventTrigger>
+                    <behaviors:EventTrigger EventName="LostMouseCapture">
+                        <behaviors:InvokeCommandAction Command="{Binding HoldActionCancelCommand}" CommandParameter="{Binding IncreaseByOneCommand}" />
+                    </behaviors:EventTrigger>
+                    <behaviors:EventTrigger EventName="MouseLeave">
+                        <behaviors:InvokeCommandAction Command="{Binding ReleaseActionCommand}" CommandParameter="{Binding IncreaseByOneCommand}" />
                     </behaviors:EventTrigger>
                     <behaviors:EventTrigger EventName="PreviewMouseUp">
                         <behaviors:InvokeCommandAction Command="{Binding ReleaseActionCommand}" CommandParameter="{Binding IncreaseByOneCommand}" />

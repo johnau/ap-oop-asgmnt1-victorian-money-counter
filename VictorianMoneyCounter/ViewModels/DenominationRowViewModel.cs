@@ -41,8 +41,8 @@ public partial class DenominationRowViewModel : ObservableObject, IIndexedViewMo
     [ObservableProperty]
     public bool _canExchange = true;
 
-    // replace this with a single property (IRelayCommand) to avoid two items moving together
-    public Dictionary<IRelayCommand, bool> _actionHeld = [];
+    //public Dictionary<IRelayCommand, bool> _actionHeld = []; // removed - only allow one
+    public IRelayCommand? _actionHeld;
 
     /// <summary>
     /// Primary constructor
@@ -121,20 +121,26 @@ public partial class DenominationRowViewModel : ObservableObject, IIndexedViewMo
         _WalletManager.UpdateWallet(WalletId, Denomination-1, convertedQuantity);
     }
 
-    [RelayCommand]
-    //private async Task HoldAction(IRelayCommand command)
-    private void HoldAction(IRelayCommand command)
+    [RelayCommand(IncludeCancelCommand = true)] // As an async task, do we AllowConcurrentTransactions = true, IncludeCancelCommand = true (HoldActionCancelCommand created) and provide Cancellation token
+
+    private async Task HoldAction(IRelayCommand command, CancellationToken token)
     {
-        //await Task.Delay(200);
-        _actionHoldTimer.Start();
-        _actionHeld[command] = true;
+        try
+        {
+            await Task.Delay(250, token);
+            _actionHoldTimer.Start();
+            _actionHeld = command;
+        }
+        catch (OperationCanceledException) {
+            ReleaseAction(command);
+        }
     }
 
     [RelayCommand]
     private void ReleaseAction(IRelayCommand command)
     {
         _actionHoldTimer.Stop();
-        _actionHeld[command] = false;
+        _actionHeld = null;
     }
 
     /// <summary>
@@ -167,10 +173,10 @@ public partial class DenominationRowViewModel : ObservableObject, IIndexedViewMo
 
     private void TimerTickAction(object? sender, EventArgs e)
     {
-        foreach (var command in _actionHeld.Keys)
+        if (_actionHeld != null && _actionHeld.CanExecute(null))
         {
-            if (_actionHeld[command] && command.CanExecute(null))
-                command.Execute(null);
+            _actionHeld.Execute(null);
         }
+
     }
 }

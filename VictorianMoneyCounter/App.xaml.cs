@@ -16,6 +16,10 @@ public partial class App : Application
 
     public App()
     {
+        //Log.Logger = new LoggerConfiguration()
+        //    .WriteTo.Console()
+        //    .CreateLogger();
+
         AppHost = Host.CreateDefaultBuilder()
             .ConfigureServices((hostContext, services) =>
             {

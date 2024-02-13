@@ -4,11 +4,11 @@ using VictorianMoneyCounter.Service;
 
 namespace VictorianMoneyCounter.ViewModels;
 
-public partial class TotalRowViewModel : ObservableObject, IUpdatableViewModel
+public partial class TotalRowViewModel : ObservableObject, IUpdatableViewModel, IConfigurableViewModel<BasicViewModelConfiguration>
 {
     private readonly IWalletManager<Wallet> _WalletManager;
     private readonly ICurrencyConverter _CurrencyConverter;
-    public string WalletId { get; set; } = string.Empty;
+    public string WalletId { get; private set; } = string.Empty;
 
     [ObservableProperty]
     private string _totalString = "£0 0c 0s 0d 0f";
@@ -24,9 +24,9 @@ public partial class TotalRowViewModel : ObservableObject, IUpdatableViewModel
         _CurrencyConverter = currencyConverter;
     }
 
-    public void Configure(string walletId)
+    public void Configure(BasicViewModelConfiguration config)
     {
-        WalletId = walletId;
+        WalletId = config.WalletId;
     }
 
     /// <summary>
@@ -34,7 +34,7 @@ public partial class TotalRowViewModel : ObservableObject, IUpdatableViewModel
     /// </summary>
     public void Update()
     {
-        var wallet = _WalletManager.FindWalletById(WalletId);
+        var wallet = _WalletManager.FindWallet(WalletId);
         UpdateQuantitiesFromWallet(wallet);
         //Debug.WriteLine($">> {Denomination}={Quantity}");
     }

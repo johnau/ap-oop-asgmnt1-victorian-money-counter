@@ -38,7 +38,7 @@ public class WalletManager : IWalletManager<Wallet>
     /// <param name="id"></param>
     /// <returns></returns>
     /// <exception cref="Exception"></exception>
-    public Wallet FindWalletById(string id = "")
+    public Wallet FindWallet(string id = "")
     {
         if (_wallets.Count == 0)
             throw new Exception("Internal error"); // There should always be a wallet

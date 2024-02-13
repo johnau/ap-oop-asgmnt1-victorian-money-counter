@@ -6,7 +6,7 @@ public interface IWalletManager<T>
 {
     string CreateWallet();
 
-    T FindWalletById(string id = "");
+    T FindWallet(string id = "");
 
     T UpdateWallet(string id, Denomination denomination, int valueChange);
 

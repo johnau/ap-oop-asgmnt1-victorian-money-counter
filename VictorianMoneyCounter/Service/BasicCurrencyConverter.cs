@@ -32,7 +32,7 @@ public class BasicCurrencyConverter : ICurrencyConverter
         var farthings = quantities.Sum(_ => DenominationInfoFactory.ConvertToFarthings(_.Value, _.Key));
         var max = (int)Enum.GetValues<Denomination>().Max(); // Avoiding i = 5
 
-        for (int i = max; i > 1; i--)
+        for (int i = max; i >= 2; i--) // does not process farthings (i > 1)
         {
             Denomination denomination = (Denomination)i;
             (int quantity, _, farthings) = Convert(Denomination.Farthing, denomination, farthings);
@@ -40,7 +40,6 @@ public class BasicCurrencyConverter : ICurrencyConverter
         }
 
         consolidatedQuantities[Denomination.Farthing] = farthings;
-
         return consolidatedQuantities;
     }
 

@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Microsoft.Extensions.Configuration;
 using System.Diagnostics;
 using System.Windows.Threading;
 using VictorianMoneyCounter.Model.Aggregates;
@@ -11,8 +12,11 @@ namespace VictorianMoneyCounter.ViewModels;
 /// <summary>
 /// ViewModel for DenominationRow UserControl.
 /// Partial class extends CommunityToolkit.Mvvm.ComponentModel.ObservableObject to provide ObservableProperty
+/// 
+/// TO DO: Need an IConfigurableViewModel<C> interface where C is type of Configuration Object (object that has 
+/// required fields for configuration)
 /// </summary>
-public partial class DenominationRowViewModel : ObservableObject, IIndexedViewModel, IUpdatableViewModel
+public partial class DenominationRowViewModel : ObservableObject, IIndexedViewModel, IUpdatableViewModel, IConfigurableViewModel<DenominationRowViewModelConfiguration>
 {
     private readonly IWalletManager<Wallet> _WalletManager;
     private readonly ICurrencyConverter _CurrencyConverter;
@@ -60,17 +64,17 @@ public partial class DenominationRowViewModel : ObservableObject, IIndexedViewMo
         _actionHoldTimer.Tick += TimerTickAction;
     }
 
-    public void Configure(Denomination denomination, string walletId, int index, int totalRows, string singularLabel, string pluralLabel)
+    public void Configure(DenominationRowViewModelConfiguration configuration)
     {
-        Denomination = denomination;
-        WalletId = walletId;
-        Index = index;
-        SingularLabel = singularLabel;
-        PluralLabel = pluralLabel;
-        Label = pluralLabel;
+        Denomination = configuration.Denomination;
+        WalletId = configuration.WalletId;
+        Index = configuration.Index;
+        SingularLabel = configuration.SingularLabel;
+        PluralLabel = configuration.PluralLabel;
+        Label = configuration.PluralLabel;
 
         if (Index == 1) Use_ExchangeUp = false;
-        if (totalRows > 0 && Index == totalRows) Use_ExchangeDown = false;
+        if (configuration.TotalRows > 0 && Index == configuration.TotalRows) Use_ExchangeDown = false;
     }
 
     partial void OnQuantityChanged(int value) => Label = value == 1 ? SingularLabel : PluralLabel;
@@ -160,7 +164,7 @@ public partial class DenominationRowViewModel : ObservableObject, IIndexedViewMo
     /// </summary>
     public void Update()
     {
-        var wallet = _WalletManager.FindWalletById(WalletId);
+        var wallet = _WalletManager.FindWallet(WalletId);
         UpdateQuantityFromWallet(wallet);
         //Debug.WriteLine($">> {Denomination}={Quantity}");
     }

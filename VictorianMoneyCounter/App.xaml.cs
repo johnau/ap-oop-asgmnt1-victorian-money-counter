@@ -28,6 +28,9 @@ public partial class App : Application
                 services.AddTransient<WalletPageViewModel>();
                 services.AddGenericFactory<WalletPage>();
 
+                services.AddTransient<TotalRowViewModel>();
+                services.AddGenericFactory<TotalRow>();
+
                 services.AddTransient<DenominationRowViewModel>();
                 services.AddGenericFactory<DenominationRow>(); // Factory Interf
             })
@@ -39,7 +42,7 @@ public partial class App : Application
     {
         await AppHost!.StartAsync();
 
-        IWalletManager<Wallet> walletManager = AppHost.Services.GetRequiredService<IWalletManager<Wallet>>();
+        var walletManager = AppHost.Services.GetRequiredService<IWalletManager<Wallet>>();
         walletManager.CreateWallet();
 
         var startupForm = AppHost.Services.GetRequiredService<MainWindow>();

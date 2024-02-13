@@ -165,10 +165,7 @@
                 Content="＋" 
                 Grid.Column="4" 
                 Style="{StaticResource BoldButton}"
-                Command="{Binding IncreaseByOneCommand}"
-                MouseDown="Button_MouseDown"
-                MouseUp="Button_MouseUp"
-                LostMouseCapture="Button_LostMouseCapture">
+                Command="{Binding IncreaseByOneCommand}" >
                 <behaviors:Interaction.Triggers>
                     <behaviors:EventTrigger EventName="PreviewMouseDown">
                         <behaviors:InvokeCommandAction Command="{Binding HoldActionCommand}" CommandParameter="{Binding IncreaseByOneCommand}" />

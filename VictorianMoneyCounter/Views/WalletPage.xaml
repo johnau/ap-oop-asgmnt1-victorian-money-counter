@@ -7,10 +7,9 @@
       mc:Ignorable="d" 
       d:DesignHeight="700" d:DesignWidth="600"
       Title="MainPage">
-
-    <Page.Resources>
+    <!--<Page.Resources>
         <Style TargetType="TextBlock">
-            <!-- why does this apply to all TextBlocks here, but on UserControl it does not and is instead overriden by the named style? -->
+            --><!-- why does this apply to all TextBlocks here, but on UserControl it does not and is instead overriden by the named style? --><!--
             <Setter Property="HorizontalAlignment" Value="Center" />
             <Setter Property="FontSize" Value="24" />
         </Style>
@@ -18,7 +17,7 @@
             <Setter Property="FontSize" Value="60" />
             <Setter Property="FontWeight" Value="SemiBold" />
         </Style>
-    </Page.Resources>
+    </Page.Resources>-->
     <Grid x:Name="MainLayoutGrid">
         <Grid.RowDefinitions>
             <RowDefinition />
@@ -28,12 +27,12 @@
             <RowDefinition />
             <RowDefinition />
         </Grid.RowDefinitions>
-        <Border BorderBrush="Black" BorderThickness="0 0 0 4" Grid.Row="0" >
+        <!--<Border BorderBrush="Black" BorderThickness="0 0 0 4" Grid.Row="0" >
             <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
                 <TextBlock Text="0 0 0 0 0 0" Style="{StaticResource LargeText}" />
                 <TextBlock Text="Total Worth" />
             </StackPanel>
-        </Border>
+        </Border>-->
         <!--<local:DenominationRow Grid.Row="1" Background="#00aaff"/>
         <local:DenominationRow Grid.Row="2" Background="#0099ff"/>
         <local:DenominationRow Grid.Row="3" Background="#0088ff"/>

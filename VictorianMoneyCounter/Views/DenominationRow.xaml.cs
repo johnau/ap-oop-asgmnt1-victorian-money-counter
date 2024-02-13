@@ -25,18 +25,4 @@ public partial class DenominationRow : UserControl, IDenominationRow<Denominatio
         return ViewModel;
     }
 
-    private void Button_MouseDown(object sender, MouseButtonEventArgs e)
-    {
-        Debug.WriteLine($"Mouse Down on: {sender.GetType()}");
-    }
-
-    private void Button_MouseUp(object sender, MouseButtonEventArgs e)
-    {
-        Debug.WriteLine($"Mouse Up on: {sender.GetType()}");
-    }
-
-    private void Button_LostMouseCapture(object sender, MouseEventArgs e)
-    {
-
-    }
 }

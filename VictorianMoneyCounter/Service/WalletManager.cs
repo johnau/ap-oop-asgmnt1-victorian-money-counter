@@ -119,6 +119,8 @@ public class WalletManager : IWalletManager<Wallet>
     /// </summary>
     private void NotifySubscribers()
     {
+        // TODO: Optimize notifying subscribers to only notify subscribers that will care
+        // ie. no point calling an update on every row if only one row needs to be updated.
         foreach (var subscriber in _subscribers)
             subscriber.Invoke();
     }

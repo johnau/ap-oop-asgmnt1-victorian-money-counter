@@ -14,41 +14,64 @@ namespace VictorianMoneyCounter.Views;
 /// Then be able to shake the app and make it shake the coins down the rows
 /// 
 /// 
+/// How do we calculate the total, we start at farthings (smallest), 
+/// can use recursion or a loop to convert all farthings to pence (with some farthings remainder)
+/// or could use a calculation that works the answer out immediately
+/// 
+/// 
+/// TODO: Separate out some logic from viewmodel of denominationrow that are not part of the assignment
+/// so it is easier to see whats going on
+/// 
 /// </summary>
 public partial class WalletPage : Page
 {
-    private readonly IAbstractFactory<DenominationRow> _RowFactory; // DenominationRow can be interfaced
+    private readonly IAbstractFactory<DenominationRow> _DenominationRowFactory; // DenominationRow can be interfaced
+    private readonly IAbstractFactory<TotalRow> _TotalRowFactory;
 
-    public WalletPage(WalletPageViewModel viewModel, IAbstractFactory<DenominationRow> rowFactory)
+    private WalletPageViewModel ViewModel => (WalletPageViewModel)DataContext;
+    public WalletPage(
+        WalletPageViewModel viewModel, 
+        IAbstractFactory<DenominationRow> denominationRowFactory,
+        IAbstractFactory<TotalRow> totalRowFactory)
     {
         DataContext = viewModel;
-        _RowFactory = rowFactory;
+        _DenominationRowFactory = denominationRowFactory;
+        _TotalRowFactory = totalRowFactory;
         InitializeComponent();
         Loaded += ConfigurePage;
     }
 
-    private WalletPageViewModel ViewModel => (WalletPageViewModel)DataContext;
-
     private void ConfigurePage(object sender, RoutedEventArgs e)
     {
-        Array _ = Enum.GetValues(typeof(Denomination));
+        ConfigureDenominationRows();
+        ConfigureTotalRows();
+    }
+
+    private void ConfigureTotalRows()
+    {
+        var totalRow = _TotalRowFactory.Create();
+    }
+
+    private void ConfigureDenominationRows()
+    {
+        var _ = Enum.GetValues(typeof(Denomination));
         Array.Reverse(_);
-        int _total = _.Length;
-        int i = 1;
+        var _total = _.Length;
+        var i = 1;
         foreach (Denomination d in _)
         {
-            DenominationRow denominationRow = _RowFactory.Create();
+            var denominationRow = _DenominationRowFactory.Create();
             denominationRow.GetViewModel().Configure(
-                denomination:   d,
-                walletId:       ViewModel.WalletId, 
-                index:          i, 
-                totalRows:      _total, 
-                singularLabel:  DenominationInfoFactory.GetDenominationInfo(d).Singular, 
-                pluralLabel:    DenominationInfoFactory.GetDenominationInfo(d).Plural
+                denomination: d,
+                walletId: ViewModel.WalletId,
+                index: i,
+                totalRows: _total,
+                singularLabel: DenominationInfoFactory.GetDenominationInfo(d).Singular,
+                pluralLabel: DenominationInfoFactory.GetDenominationInfo(d).Plural
                 );
 
             ViewModel.RegisterChildViewModel((int)d, denominationRow.GetViewModel()); // i could also be key
-            
+
             MainLayoutGrid.Children.Add(denominationRow);
             Grid.SetRow(denominationRow, i++);
         }

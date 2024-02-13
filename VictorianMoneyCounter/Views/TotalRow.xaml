@@ -1,0 +1,30 @@
+﻿<UserControl x:Class="VictorianMoneyCounter.Views.TotalRow"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:VictorianMoneyCounter.Views"
+             xmlns:vm="clr-namespace:VictorianMoneyCounter.ViewModels"
+             mc:Ignorable="d" 
+             d:DataContext="{d:DesignInstance Type=vm:TotalRowViewModel}"
+             d:DesignHeight="100" d:DesignWidth="800">
+    <UserControl.Resources>
+        <Style TargetType="TextBlock">
+            <!-- Why does this apply to all TextBlocks here, but on UserControl it does not and is instead overriden by the named style? -->
+            <Setter Property="HorizontalAlignment" Value="Center" />
+            <Setter Property="FontSize" Value="24" />
+            <Setter Property="LineHeight" Value="10" />
+            <Setter Property="LineStackingStrategy" Value="BlockLineHeight" />
+        </Style>
+        <Style x:Key="LargeText" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="60" />
+            <Setter Property="FontWeight" Value="SemiBold" />
+        </Style>
+    </UserControl.Resources>
+    <Border BorderBrush="Black" BorderThickness="0 0 0 4" Grid.Row="0" >
+        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+            <TextBlock Text="{Binding TotalString, FallbackValue=0}" Style="{StaticResource LargeText}" HorizontalAlignment="Center" />
+            <TextBlock Text="Total Worth" HorizontalAlignment="Center" />
+        </StackPanel>
+    </Border>
+</UserControl>

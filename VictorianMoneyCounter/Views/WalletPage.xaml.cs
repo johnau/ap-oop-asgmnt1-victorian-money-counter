@@ -19,7 +19,7 @@ namespace VictorianMoneyCounter.Views;
 /// so it is easier to see whats going on
 /// 
 /// </summary>
-public partial class WalletPage : Page
+public partial class WalletPage : Page, IViewModelBacked<WalletPageViewModel>
 {
     private readonly IAbstractFactory<DenominationRow> _DenominationRowFactory; // DenominationRow can be interfaced
     private readonly IAbstractFactory<TotalRow> _TotalRowFactory;
@@ -98,5 +98,10 @@ public partial class WalletPage : Page
                     ViewModel.NewWalletCommand.Execute(null);
             }
         };
+    }
+
+    public WalletPageViewModel GetViewModel()
+    {
+        return ViewModel;
     }
 }

@@ -35,40 +35,43 @@
                 </Setter.Value>
             </Setter>            
         </Style>
+        
         <Style x:Key="MoveDownButton" TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
             <Setter Property="Padding" Value="25" />
             <Setter Property="Content">
                 <Setter.Value>
-                    <Image Source="pack://application:,,,/VictorianMoneyCounter;component/Assets/ButtonImages/downArrowEnabled.png" />
+                    <Image Source="pack://application:,,,/Assets/ButtonImages/downArrowEnabled.png" />
                 </Setter.Value>
             </Setter>
             <Style.Triggers>
                 <Trigger Property="IsEnabled" Value="False">
                     <Setter Property="Content">
                         <Setter.Value>
-                            <Image Source="pack://application:,,,/VictorianMoneyCounter;component/Assets/ButtonImages/downArrowDisabled.png" />
+                            <Image Source="pack://application:,,,/Assets/ButtonImages/downArrowDisabled.png" />
                         </Setter.Value>
                     </Setter>
                 </Trigger>
             </Style.Triggers>
         </Style>
+        
         <Style x:Key="MoveUpButton" TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
             <Setter Property="Padding" Value="25" />
             <Setter Property="Content">
                 <Setter.Value>
-                    <Image Source="pack://application:,,,/VictorianMoneyCounter;component/Assets/ButtonImages/upArrowEnabled.png" />
+                    <Image Source="pack://application:,,,/Assets/ButtonImages/upArrowEnabled.png" />
                 </Setter.Value>
             </Setter>
             <Style.Triggers>
                 <Trigger Property="IsEnabled" Value="False">
                     <Setter Property="Content">
                         <Setter.Value>
-                            <Image Source="pack://application:,,,/VictorianMoneyCounter;component/Assets/ButtonImages/upArrowDisabled.png" />
+                            <Image Source="pack://application:,,,/Assets/ButtonImages/upArrowDisabled.png" />
                         </Setter.Value>
                     </Setter>
                 </Trigger>
             </Style.Triggers>
         </Style>
+        
         <Style x:Key="BoldButton" TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
             <Setter Property="FontSize" Value="60" />
             <Setter Property="Padding" Value="0 -5 0 0" />
@@ -78,18 +81,21 @@
             <Setter Property="FontSize" Value="50" />
             <Setter Property="HorizontalAlignment" Value="Center" />
         </Style>
+        
         <Style x:Key="SmallText" TargetType="TextBlock">
             <Setter Property="FontSize" Value="20" />
             <Setter Property="HorizontalAlignment" Value="Center" />
         </Style>
+        
         <BooleanToVisibilityConverter x:Key="BoolToVisConverter"/>
+        
     </UserControl.Resources>
 
     <Border 
         BorderBrush="Black" 
         BorderThickness="4 0 4 4" 
         ClipToBounds="True" >
-        <Grid>
+        <Grid x:Name="MainLayoutGrid">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition MaxWidth="100" MinWidth="30" />
                 <ColumnDefinition MaxWidth="100" MinWidth="30"/>
@@ -193,8 +199,10 @@
                     </behaviors:EventTrigger>
                 </behaviors:Interaction.Triggers>
             </Button>
-            
+
+            <Canvas x:Name="RowCanvas" Panel.ZIndex="0" Width="{Binding ActualWidth, ElementName=MainLayoutGrid}" Height="{Binding ActualHeight, ElementName=MainLayoutGrid}" />
         </Grid>
+        
     </Border>
 
 </UserControl>

@@ -41,7 +41,8 @@ public partial class DenominationRowViewModel : ObservableObject, IIndexedViewMo
     public bool _canExchange = true;
 
     public IRelayCommand? _actionHeld;
-    //public Dictionary<IRelayCommand, bool> _actionHeld = []; // removed - only allow one
+
+    private List<Action<int>> _quantitySubscribers = [];
 
     /// <summary>
     /// Primary constructor
@@ -71,6 +72,8 @@ public partial class DenominationRowViewModel : ObservableObject, IIndexedViewMo
         if (Index == 1) Use_ExchangeUp = false;
         if (configuration.TotalRows > 0 && Index == configuration.TotalRows) Use_ExchangeDown = false;
     }
+
+    public void RegisterSubscriberToQuantity(Action<int> action) => _quantitySubscribers.Add(action);
 
     partial void OnQuantityChanged(int value) => Label = value == 1 ? SingularLabel : PluralLabel;
 
@@ -171,8 +174,16 @@ public partial class DenominationRowViewModel : ObservableObject, IIndexedViewMo
     {
         var wallet = _WalletManager.FindWallet(WalletId);
         Quantity = WalletAccessor.Access(wallet).GetDenominationQuantity(Denomination);
+        _quantitySubscribers.ForEach(subscriber => subscriber.Invoke(Quantity));
     }
 
+    /// <summary>
+    /// Method run on each tick of the DispatcherTimer
+    /// 
+    /// TODO: Increase the speed of the action after some period of continuous running
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void TimerTickAction(object? sender, EventArgs e)
     {
         if (_actionHeld != null && _actionHeld.CanExecute(null))

@@ -1,5 +1,4 @@
-﻿using System.Diagnostics;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using VictorianMoneyCounter.Model.Aggregates;
@@ -10,10 +9,6 @@ namespace VictorianMoneyCounter.Views;
 
 /// <summary>
 /// View of a Victorian Wallet
-/// 
-/// TO DO: add some crude animation of the coins dropping into their row as they are added
-/// Then be able to shake the app and make it shake the coins down the rows, or drag n drop 
-/// coins to other rows
 ///
 /// TODO: Separate out some logic from viewmodel of denominationrow that are not part of the assignment
 /// so it is easier to see whats going on
@@ -47,13 +42,15 @@ public partial class WalletPage : Page, IViewModelBacked<WalletPageViewModel>
         Unloaded += Cleanup;
     }
 
+    /// <summary>
+    /// Configure window title based on wallet data
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void ConfigureWindow(object sender, RoutedEventArgs e)
     {
         var window = Window.GetWindow(this);
-        if (window != null)
-        {
-            window.Title += $" - {ViewModel.WalletId}";
-        }
+        if (window != null) window.Title += $" - {ViewModel.WalletId}";
     }
 
     /// <summary>
@@ -98,6 +95,11 @@ public partial class WalletPage : Page, IViewModelBacked<WalletPageViewModel>
         }
     }
 
+    /// <summary>
+    /// Configure Keyboard shortcuts for other functions
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void ConfigureShortcuts(object sender, RoutedEventArgs e)
     {
         var window = Window.GetWindow(this);

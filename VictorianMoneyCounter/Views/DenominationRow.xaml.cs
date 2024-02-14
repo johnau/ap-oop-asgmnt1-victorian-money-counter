@@ -12,18 +12,17 @@ public partial class DenominationRow : UserControl, IViewModelBacked<Denominatio
     private DenominationRowViewModel ViewModel => (DenominationRowViewModel) DataContext;
     private readonly List<Image> _coins = [];
 
-    public DenominationRow()
-    {
-        InitializeComponent();
-    }
-
+    /// <summary>
+    /// Primary Constructor
+    /// </summary>
+    /// <param name="viewModel"></param>
     public DenominationRow(DenominationRowViewModel viewModel)
     {
         DataContext = viewModel;
         InitializeComponent();
         viewModel.RegisterSubscriberToQuantity((qty) => UpdateCoins(qty));
-        //Loaded += DenominationRow_Loaded;
     }
+
     public DenominationRowViewModel GetViewModel() => ViewModel;
 
     /// <summary>
@@ -34,7 +33,7 @@ public partial class DenominationRow : UserControl, IViewModelBacked<Denominatio
     {
         if (quantity > _coins.Count)
         {
-            for (int i = 0; i < quantity - _coins.Count; i++)
+            for (int i = 0; i <= quantity-_coins.Count; i++)
             {
                 var coin = SpawnCoin();
                 _coins.Add(coin);
@@ -43,11 +42,11 @@ public partial class DenominationRow : UserControl, IViewModelBacked<Denominatio
         }
         else if (quantity < _coins.Count)
         {
-            for (int i = 0; i < _coins.Count - quantity; i++)
+            for (int i = 0; i <= _coins.Count-quantity; i++)
             {
                 var removing = _coins.Last();
-                _coins.Remove(removing);
                 RowCanvas.Children.Remove(removing);
+                _coins.Remove(removing);
             }
         }
     }
@@ -78,6 +77,7 @@ public partial class DenominationRow : UserControl, IViewModelBacked<Denominatio
     /// <param name="image"></param>
     private void DropCoin(Image image)
     {
+        
         Random random = new();
 
         // configuration variables

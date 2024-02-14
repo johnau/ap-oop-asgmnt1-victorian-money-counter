@@ -80,13 +80,14 @@ public static class DenominationValue
     }
 
     /// <summary>
-    /// Value of given amount of Farthings in target denomination
+    /// Value of given amount of Farthings in target denomination. 
+    /// Returns quantity of target denomination and remainder in Farthings
     /// </summary>
     /// <param name="amount"></param>
     /// <param name="target"></param>
     /// <returns></returns>
     /// <exception cref="ArgumentException"></exception>
-    public static (int WholeNumber, int Remainder) ValueOfFarthings(int amount, Denomination target)
+    public static (int WholeNumber, int RemainderFarthings) ValueOfFarthings(int amount, Denomination target)
     {
         int wholeNumber;
         int remainder;

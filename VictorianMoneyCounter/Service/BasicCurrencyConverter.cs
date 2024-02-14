@@ -1,5 +1,4 @@
-﻿using System.Diagnostics;
-using VictorianMoneyCounter.Model.Aggregates;
+﻿using VictorianMoneyCounter.Model.Aggregates;
 
 namespace VictorianMoneyCounter.Service;
 
@@ -32,15 +31,20 @@ public class BasicCurrencyConverter : ICurrencyConverter
         return (targetQuantity, remainderOrigignalDenomination, finalFarthingsRemainder);
     }
 
+    /// <summary>
+    /// Consolidate denomination quantities into smallest amount of coins
+    /// </summary>
+    /// <param name="quantities"></param>
+    /// <returns></returns>
     public Dictionary<Denomination, int> ConsolidateQuantities(Dictionary<Denomination, int> quantities)
     {
         var consolidatedQuantities = new Dictionary<Denomination, int>();
         var farthings = quantities.Sum(_ => DenominationValue.ValueInFarthings(_.Value, _.Key));
         var max = (int)Enum.GetValues<Denomination>().Max(); // Avoiding i = 5
 
-        for (int i = max; i >= 2; i--) // does not process farthings (i > 1)
+        //for (int i = max; i >= 2; i--) // loop denominations besides last - does not process farthings (i > 1)
+        for (Denomination denomination = Denomination.Pound; denomination >= Denomination.Penny; denomination--)
         {
-            Denomination denomination = (Denomination)i;
             (int quantity, _, farthings) = Convert(Denomination.Farthing, denomination, farthings);
             consolidatedQuantities[denomination] = quantity;
         }

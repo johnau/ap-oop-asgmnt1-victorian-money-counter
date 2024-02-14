@@ -7,9 +7,9 @@ CDI test: /WpfApp1 + /WpfApp1ClassLibrary
 -----------------------
 
 ## Features:
-Press Ctrl + N to create a new wallet
-Long press implemented on buttons for quickly incrementing quantities
-Ready for a persistence layer to replace current in-memory store
+- Press Ctrl + N to create a new wallet
+- Long press implemented on buttons for quickly incrementing quantities
+- Ready for a persistence layer to replace current in-memory store
 
 -------------------------
 

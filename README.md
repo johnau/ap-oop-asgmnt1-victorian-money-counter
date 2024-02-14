@@ -17,13 +17,19 @@
 
 ## Notes:
 Experimenting with: 
-Community.Toolkit.Mvvm (Model-View-ViewModel pattern)
-Microsoft.Extensions.DependencyInjection (+ .Hosting) (CDI/IoC)
-Microsoft.Xaml.Behaviors.Wpf (Handle secondary mouse captures)
-WPF Animations/Storyboards
-XAML Bindings
-XAML Resource Styles, Page, UserControl components
-XAML Grid, StackPanel, Canvas
+- Community.Toolkit.Mvvm (Model-View-ViewModel pattern)
+- Microsoft.Extensions.DependencyInjection (+ .Hosting) (CDI/IoC) <note: part of the .net framework, but not part of .net core>
+- Microsoft.Xaml.Behaviors.Wpf (Handle secondary mouse captures)
+- WPF Animations/Storyboards
+- XAML Bindings
+- XAML Resource Styles, Page, UserControl components
+- XAML Grid, StackPanel, Canvas
+
+----------------
+
+## TO-DO:
+- Testing
+- WalletManager
 
 ----------------
 ### Application Flow:
@@ -46,14 +52,12 @@ A WalletAccessor helper class has also been included for some basic interactions
 -------------------
 ## Service layer
 
-ICurrencyConverter and IWalletManager implementations
-
-*** IValueCalculator service may also live here - required for next step
+ICurrencyConverter and IWalletManager and implementations
 
 -------------------
 ## StartupHelpers
 
-Some boilerplate for .Net Dependency Injection
+Boilerplate for .Net Dependency Injection
 
 -------------------
 

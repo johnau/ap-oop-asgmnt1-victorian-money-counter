@@ -1,8 +1,8 @@
 # C# OOP Assignment 1: Victorian Money Counter
 
--Main Assignment project: /VictorianMoneyCounter
--Mvvm Toolkit test: /MvvmExample
--CDI test: /WpfApp1 + /WpfApp1ClassLibrary
+- Main Assignment project: /VictorianMoneyCounter
+- Mvvm Toolkit test: /MvvmExample
+- CDI test: /WpfApp1 + /WpfApp1ClassLibrary
 
 -----------------------
 

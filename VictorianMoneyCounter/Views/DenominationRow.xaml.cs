@@ -45,7 +45,10 @@ public partial class DenominationRow : UserControl, IViewModelBacked<Denominatio
             for (int i = 0; i <= _coins.Count-quantity; i++)
             {
                 var removing = _coins.Last();
-                RowCanvas.Children.Remove(removing);
+                while (RowCanvas.Children.Contains(removing))
+                {
+                    RowCanvas.Children.Remove(removing);
+                }
                 _coins.Remove(removing);
             }
         }
@@ -77,14 +80,13 @@ public partial class DenominationRow : UserControl, IViewModelBacked<Denominatio
     /// <param name="image"></param>
     private void DropCoin(Image image)
     {
-        
-        Random random = new();
+        var random = new Random();
 
         // configuration variables
         var animationDuration = 1d; // 1 second
         var fallSpeed = 0.1;        // 0.1 second
         var bounceForce = image.Height * 3; // force of bounce
-        var horizontalForce = random.Next(0, (int)image.Width / 2); // sideways force
+        var horizontalForce = random.Next(0, (int)image.Width); // sideways force
 
         var direction = random.Next(0, 2) == 0 ? 1 : -1;
         var startX = (RowCanvas.ActualWidth - image.Width) / 2;
@@ -94,7 +96,7 @@ public partial class DenominationRow : UserControl, IViewModelBacked<Denominatio
         var animationY = new DoubleAnimationUsingKeyFrames();
         var animationX = new DoubleAnimationUsingKeyFrames();
 
-        // manually define the fall - start of fall
+        // manually define the fall. start of fall
         animationY.KeyFrames.Add(new LinearDoubleKeyFrame(startY, TimeSpan.FromSeconds(0)));
         animationX.KeyFrames.Add(new LinearDoubleKeyFrame(startX, TimeSpan.FromSeconds(0)));
 
@@ -104,7 +106,7 @@ public partial class DenominationRow : UserControl, IViewModelBacked<Denominatio
 
         // define the bounces
         var locationX = startX;
-        for (double t = fallSpeed; t <= animationDuration; t += 0.05)
+        for (double t = fallSpeed; t <= animationDuration; t += 0.1)
         {
             var keyTime = TimeSpan.FromSeconds(t);
             var bounceHeight = MathHelpers.CalculateBounceHeight(animationDuration, t, bounceForce);

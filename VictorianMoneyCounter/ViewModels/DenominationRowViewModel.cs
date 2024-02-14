@@ -73,7 +73,7 @@ public partial class DenominationRowViewModel : ObservableObject, IIndexedViewMo
         if (configuration.TotalRows > 0 && Index == configuration.TotalRows) Use_ExchangeDown = false;
     }
 
-    public void RegisterSubscriberToQuantity(Action<int> action) => _quantitySubscribers.Add(action);
+    public void SubscribeToQuantityChange(Action<int> action) => _quantitySubscribers.Add(action);
 
     partial void OnQuantityChanged(int value) => Label = value == 1 ? SingularLabel : PluralLabel;
 

@@ -20,7 +20,7 @@ public partial class DenominationRow : UserControl, IViewModelBacked<Denominatio
     {
         DataContext = viewModel;
         InitializeComponent();
-        viewModel.RegisterSubscriberToQuantity((qty) => UpdateCoins(qty));
+        viewModel.SubscribeToQuantityChange((qty) => UpdateCoins(qty));
     }
 
     public DenominationRowViewModel GetViewModel() => ViewModel;

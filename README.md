@@ -1,27 +1,31 @@
-# Assignment 1: Victorian Money Counter
+# C# OOP Assignment 1: Victorian Money Counter
 
-Notes:
-Experimenting with Community.Toolkit.Mvvm
-Experimenting with Microsoft.Extensions.DependencyInjection (+ .Hosting)
+## Features:
+Press Ctrl + N to create a new wallet
+Long press implemented on buttons for quickly incrementing quantities
+Ready for a persistence layer to replace current in-memory store
 
-- Using Factory pattern and Generics registered in Container for instances of WPF components (Window, Page, UserControl)
-- ViewModels are registered as Transients for fresh instantiation for each class with the dependency
-- Other components are simply registered as Transients or Singletons for now.
+## Notes:
+Experimenting with: 
+Community.Toolkit.Mvvm (Model-View-ViewModel pattern)
+Microsoft.Extensions.DependencyInjection (+ .Hosting) (CDI/IoC)
+Microsoft.Xaml.Behaviors.Wpf (Handle secondary mouse captures)
+WPF Animations/Storyboards
+XAML Bindings
+XAML Resource Styles, Page, UserControl components
+XAML Grid, StackPanel, Canvas
 
-Application Flow:
-Entry point is in App.xaml.cs > App()
+----------------
+### Application Flow:
+Entry point is in App.xaml.cs > OnStartup(), container configuration in App() - create containered object graph
 
-Object graph is registered to Container
-
-App.xaml.cs > OnStartup(StartupEventArgs e) creates Wallet with IWalletManager and launches MainWindow
+App.xaml.cs > OnStartup(StartupEventArgs e) requests MainWindow from Container (can't avoid) and launches MainWindow
 
 MainWindow code behind is injected with instance of IAbstractFactory<WalletPage> and creates an instance of WalletPage 
 
-WalletPage is injected with new instance of WalletPageViewModel, which in turn is injected with the `Singleton` instance of IWalletManager<Wallet>
+WalletPage is injected with new instance of WalletPageViewModel, which in turn is injected with the `Singleton` instance of IWalletManager<Wallet>, new wallet is created to display on the page (not ideal - but ok)
 
-WalletPageViewModel accesses Wallet from IWalletManager (currently by grabbing the first and only wallet - multiple wallets not yet handled properly).
-
-WalletPage has an instance of the IAbstractFactory<DenominationRow> and creates required instances of the DenominationRows(5), which in turn are each injected with transient instances of DenominationRowViewModel objects.
+WalletPage has an instance of the IAbstractFactory<DenominationRow> and <TotalRow> and creates required instances. These instances have dependency on the Transient DenominationRowViewModels and TotalRowViewModel.
 
 -------------------
 ## Model layer

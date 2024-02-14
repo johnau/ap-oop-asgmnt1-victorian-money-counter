@@ -1,8 +1,9 @@
-﻿using System.Linq.Expressions;
-using System.Windows.Media;
+﻿namespace VictorianMoneyCounter.Model.Aggregates;
 
-namespace VictorianMoneyCounter.Model.Aggregates;
-
+/// <summary>
+/// Denominations with int ordering
+/// More useful values could probably have been used
+/// </summary>
 public enum Denomination
 {
     Pound = 5,
@@ -12,16 +13,26 @@ public enum Denomination
     Farthing = 1
 }
 
-public readonly struct DenominationInfo(int denomination, string singular, string plural, char symbol)
-{
-    public int Denomination { get; } = denomination;
-    public string Singular { get; } = singular;
-    public string Plural { get; } = plural;
-    public char Symbol { get; } = symbol;
-}
+/// <summary>
+/// Record to extend Denomination Enum
+/// </summary>
+/// <param name="Denomination"></param>
+/// <param name="Singular"></param>
+/// <param name="Plural"></param>
+/// <param name="Symbol"></param>
+public record DenominationInfo(int Denomination, string Singular, string Plural, char Symbol) { }
 
-public static class DenominationInfoFactory
+/// <summary>
+/// 
+/// </summary>
+public static class DenominationValue
 {
+    /// <summary>
+    /// Helper method for Denomination Enum (since C# does not seem to allow complex Enums)
+    /// </summary>
+    /// <param name="denomination"></param>
+    /// <returns></returns>
+    /// <exception cref="ArgumentException"></exception>
     public static DenominationInfo GetDenominationInfo(Denomination denomination) => denomination switch
     {
         Denomination.Pound => new DenominationInfo((int)denomination,
@@ -45,13 +56,13 @@ public static class DenominationInfoFactory
     };
 
     /// <summary>
-    /// Convert denomination to smallest denomination (Farthings)
+    /// Value of given amount of source Denomination in Farthings
     /// </summary>
     /// <param name="amount"></param>
     /// <param name="source"></param>
     /// <returns></returns>
     /// <exception cref="ArgumentException"></exception>
-    public static int ConvertToFarthings(int amount, Denomination source)
+    public static int ValueInFarthings(int amount, Denomination source)
     {
         // 1 pound = 4 crowns
         // 1 crown = 5 shillings
@@ -69,13 +80,13 @@ public static class DenominationInfoFactory
     }
 
     /// <summary>
-    /// Convert denomination from smallest denomination (Farthings)
+    /// Value of given amount of Farthings in target denomination
     /// </summary>
     /// <param name="amount"></param>
     /// <param name="target"></param>
     /// <returns></returns>
     /// <exception cref="ArgumentException"></exception>
-    public static (int WholeNumber, int Remainder) ConvertFromFarthings(int amount, Denomination target)
+    public static (int WholeNumber, int Remainder) ValueOfFarthings(int amount, Denomination target)
     {
         int wholeNumber;
         int remainder;

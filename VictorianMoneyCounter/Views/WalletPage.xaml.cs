@@ -84,8 +84,8 @@ public partial class WalletPage : Page, IViewModelBacked<WalletPageViewModel>
                                                                 WalletId: ViewModel.WalletId,
                                                                 Index: i,
                                                                 TotalRows: _total,
-                                                                SingularLabel: DenominationInfoFactory.GetDenominationInfo(d).Singular,
-                                                                PluralLabel: DenominationInfoFactory.GetDenominationInfo(d).Plural);
+                                                                SingularLabel: DenominationValue.GetDenominationInfo(d).Singular,
+                                                                PluralLabel: DenominationValue.GetDenominationInfo(d).Plural);
             denominationRow.GetViewModel().Configure(config);
 
             ViewModel.RegisterChildViewModel(denominationRow.GetViewModel()); // var i could also be key

@@ -4,20 +4,26 @@ using VictorianMoneyCounter.Model.Aggregates;
 namespace VictorianMoneyCounter.Service;
 
 /// <summary>
-/// This class should be refactored.
-/// The switch statements can be shifted out to a static class
-/// The typical Converter pattern method is the useful one.
+/// CurrencyConvert implementation to convert denominations between one another
 /// </summary>
 public class BasicCurrencyConverter : ICurrencyConverter
 {
-    public (int quantity, int remainderOriginal, int remainderFarthings) Convert(Denomination fromDenomination, Denomination toDenomination, int amount = 1)
+    /// <summary>
+    /// Converts from source Denomination to target Denomination, with the given amount.
+    /// Converts to lowest common denominator and then to the target Denomination
+    /// </summary>
+    /// <param name="source"></param>
+    /// <param name="target"></param>
+    /// <param name="amount"></param>
+    /// <returns></returns>
+    public (int quantity, int remainderOriginal, int remainderFarthings) Convert(Denomination source, Denomination target, int amount = 1)
     {
-        int quantityFarthings = DenominationInfoFactory.ConvertToFarthings(amount, fromDenomination);
+        int quantityFarthings = DenominationValue.ValueInFarthings(amount, source);
 
-        (int targetQuantity, int remainderFarthings) = DenominationInfoFactory.ConvertFromFarthings(quantityFarthings, toDenomination);
-        (int remainderOrigignalDenomination, int finalFarthingsRemainder) = DenominationInfoFactory.ConvertFromFarthings(remainderFarthings, fromDenomination);
+        (int targetQuantity, int remainderFarthings) = DenominationValue.ValueOfFarthings(quantityFarthings, target);
+        (int remainderOrigignalDenomination, int finalFarthingsRemainder) = DenominationValue.ValueOfFarthings(remainderFarthings, source);
 
-        if (fromDenomination == Denomination.Farthing)
+        if (source == Denomination.Farthing)
         {
             finalFarthingsRemainder += remainderOrigignalDenomination;
             remainderOrigignalDenomination = 0;
@@ -29,7 +35,7 @@ public class BasicCurrencyConverter : ICurrencyConverter
     public Dictionary<Denomination, int> ConsolidateQuantities(Dictionary<Denomination, int> quantities)
     {
         var consolidatedQuantities = new Dictionary<Denomination, int>();
-        var farthings = quantities.Sum(_ => DenominationInfoFactory.ConvertToFarthings(_.Value, _.Key));
+        var farthings = quantities.Sum(_ => DenominationValue.ValueInFarthings(_.Value, _.Key));
         var max = (int)Enum.GetValues<Denomination>().Max(); // Avoiding i = 5
 
         for (int i = max; i >= 2; i--) // does not process farthings (i > 1)

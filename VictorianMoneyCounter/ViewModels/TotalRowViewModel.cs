@@ -58,8 +58,8 @@ public partial class TotalRowViewModel : ObservableObject, IUpdatableViewModel, 
         var consolidated = _CurrencyConverter.ConsolidateQuantities(quantities);
 
         TotalString = string.Join(" ", consolidated.Select((kvp, index) =>
-            index == 0 ? $"{DenominationInfoFactory.GetDenominationInfo(kvp.Key).Symbol}{kvp.Value}" :
-                            $"{kvp.Value}{DenominationInfoFactory.GetDenominationInfo(kvp.Key).Symbol}"));
+            index == 0 ? $"{DenominationValue.GetDenominationInfo(kvp.Key).Symbol}{kvp.Value}" :
+                            $"{kvp.Value}{DenominationValue.GetDenominationInfo(kvp.Key).Symbol}"));
 
         var totalItems = consolidated.Values.Sum();
         if (totalItems == 0)

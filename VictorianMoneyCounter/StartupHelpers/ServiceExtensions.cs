@@ -4,7 +4,7 @@ namespace VictorianMoneyCounter.StartupHelpers;
 
 public static class ServiceExtensions
 {
-    public static void AddGenericFactory<T>(this IServiceCollection services)
+    public static void AddWpfComponentFactory<T>(this IServiceCollection services)
         where T : class
     {
         services.AddTransient<T>();

@@ -27,16 +27,16 @@ public partial class App : Application
                 services.AddTransient<ICurrencyConverter, BasicCurrencyConverter>();
 
                 services.AddSingleton<MainWindow>();
-                services.AddGenericFactory<ChildWindow>(); // Child window is same as MainWindow, could be removed
+                services.AddWpfComponentFactory<ChildWindow>(); // Child window is same as MainWindow, could be removed
                 
                 services.AddTransient<WalletPageViewModel>();
-                services.AddGenericFactory<WalletPage>();
+                services.AddWpfComponentFactory<WalletPage>();
 
                 services.AddTransient<TotalRowViewModel>();
-                services.AddGenericFactory<TotalRow>();
+                services.AddWpfComponentFactory<TotalRow>();
 
                 services.AddTransient<DenominationRowViewModel>();
-                services.AddGenericFactory<DenominationRow>(); // Factory Interf
+                services.AddWpfComponentFactory<DenominationRow>(); // Factory Interf
             })
             .Build();
         Debug.WriteLine("Registered object graph");

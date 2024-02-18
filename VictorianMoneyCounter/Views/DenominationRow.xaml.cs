@@ -89,7 +89,8 @@ public partial class DenominationRow : UserControl, IViewModelBacked<Denominatio
         var horizontalForce = random.Next(0, (int)image.Width); // sideways force
 
         var direction = random.Next(0, 2) == 0 ? 1 : -1;
-        var startX = (RowCanvas.ActualWidth - image.Width) / 2;
+        //var startX = (RowCanvas.ActualWidth - image.Width) / 2;
+        var startX = (double)random.Next((int)image.Width * 2, (int)(RowCanvas.ActualWidth - (image.Width*2)));
         var startY = -image.Height;
         var endY = RowCanvas.ActualHeight - image.Height;
 

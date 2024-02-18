@@ -12,7 +12,7 @@ public class WalletManager : IWalletManager<Wallet>
 
     public WalletManager()
     {
-        // CreateWallet(); // create a default wallet - or check for existing wallets from repository
+        CreateWallet(); // create a default wallet - or check for existing wallets from repository
     }
 
     /// <summary>

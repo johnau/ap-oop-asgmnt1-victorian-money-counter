@@ -55,10 +55,15 @@ public class BasicCurrencyConverter : ICurrencyConverter
 
     /// <summary>
     /// [Convenience method] Currency conversion between adjacent denominations (smaller to larger)
+    /// 
+    /// TODO: Flip the logic of this method, it returns the number of the denomination required to convert up,
+    /// rather than returning the quantity of the converted denomination (can then return 0 instead of -1)
+    /// and logic will align with other method; "ConvertDown()"
+    /// 
     /// </summary>
     /// <param name="denomination"></param>
     /// <param name="amount"></param>
-    /// <returns></returns>
+    /// <returns>A positive number of quantity required to convert up, else a negative number</returns>
     public int ConvertUp(Denomination denomination, int amount = 1)
     {
         return amount * denomination switch

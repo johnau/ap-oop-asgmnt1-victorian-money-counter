@@ -34,6 +34,6 @@ namespace VictorianMoneyCounter.Service
         /// <param name="denomination"></param>
         /// <param name="amount"></param>
         /// <returns></returns>
-        int ConvertUp(Denomination denomination, int amount = 1);
+        int CostToConvertUp(Denomination denomination, int amount = 1);
     }
 }

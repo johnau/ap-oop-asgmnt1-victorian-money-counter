@@ -40,7 +40,7 @@ public class BasicCurrencyConverter : ICurrencyConverter
     {
         var consolidatedQuantities = new Dictionary<Denomination, int>();
         var farthings = quantities.Sum(_ => DenominationValue.ValueInFarthings(_.Value, _.Key));
-        var max = (int)Enum.GetValues<Denomination>().Max(); // Avoiding i = 5
+        //var max = (int)Enum.GetValues<Denomination>().Max(); // Avoiding i = 5
 
         //for (int i = max; i >= 2; i--) // loop denominations besides last - does not process farthings (i > 1)
         for (Denomination denomination = Denomination.Pound; denomination >= Denomination.Penny; denomination--)
@@ -64,7 +64,7 @@ public class BasicCurrencyConverter : ICurrencyConverter
     /// <param name="denomination"></param>
     /// <param name="amount"></param>
     /// <returns>A positive number of quantity required to convert up, else a negative number</returns>
-    public int ConvertUp(Denomination denomination, int amount = 1)
+    public int CostToConvertUp(Denomination denomination, int amount = 1)
     {
         return amount * denomination switch
         {

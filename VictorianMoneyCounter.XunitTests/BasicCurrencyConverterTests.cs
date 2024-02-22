@@ -94,7 +94,7 @@ public class BasicCurrencyConverterTests
     public void ConvertUp_WillReturnCorrectValue(Denomination denomination, int amount, int expectedValue)
     {
         var converter = new BasicCurrencyConverter();
-        var result = converter.ConvertUp(denomination, amount);
+        var result = converter.CostToConvertUp(denomination, amount);
 
         Assert.Equal(expectedValue, result);
     }

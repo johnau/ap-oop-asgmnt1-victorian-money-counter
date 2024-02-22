@@ -105,7 +105,7 @@ public partial class DenominationRowViewModel : ObservableObject, IIndexedViewMo
     [RelayCommand(CanExecute = nameof(CanConvertUp))]
     private void ConvertUp()
     {
-        var requiredQuantity = _CurrencyConverter.ConvertUp(Denomination);
+        var requiredQuantity = _CurrencyConverter.CostToConvertUp(Denomination);
         _WalletManager.UpdateWallet(WalletId, Denomination, -requiredQuantity); // Take out req'd quantity from the Wallet
         _WalletManager.UpdateWallet(WalletId, Denomination+1, 1);
     }
@@ -165,7 +165,7 @@ public partial class DenominationRowViewModel : ObservableObject, IIndexedViewMo
     /// Helper function for RelayCommand CanExecute
     /// </summary>
     /// <returns>True if Quantity is greater than or equal to required amount for converting to larger denomination</returns>
-    private bool CanConvertUp() => Quantity > 0 && Quantity >= _CurrencyConverter.ConvertUp(Denomination); // Should this ref the wallet instead of Quantity
+    private bool CanConvertUp() => Quantity > 0 && Quantity >= _CurrencyConverter.CostToConvertUp(Denomination); // Should this ref the wallet instead of Quantity
 
     /// <summary>
     /// Call to force an update on the model

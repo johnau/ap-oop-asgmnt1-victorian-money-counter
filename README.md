@@ -44,24 +44,24 @@ Entry point is in `App.xaml.cs` . `OnStartup(e)`, container configuration in `Ap
 `WalletPage` has an instance of the `IAbstractFactory<DenominationRow>` and `IAbstractFactory<TotalRow>` and creates required instances. These instances have dependency on the Transient `DenominationRowViewModel`s and `TotalRowViewModel`.
 
 -------------------
-## Model layer
+### VictorianMoneyCounter.Model namespace/layer
 
 The `Wallet` model is implemented as an immutable c# `record`, and includes simple protections to prevent illegal operations/results.
 A `WalletAccessor` helper class has also been included for some basic interactions/adaptions to the `Wallet`
 
 -------------------
-## Service layer
+### VictorianMoneyCounter.Service namespace/layer
 
-`ICurrencyConverter` and `IWalletManager` and implementations
-
--------------------
-## StartupHelpers
-
-Boilerplate for .Net Dependency Injection
+`ICurrencyConverter` and `IWalletManager` and concrete implementations
 
 -------------------
+### VictorianMoneyCounter.StartupHelpers namespace
 
-## CommunityToolkit.Mvvm
+Boilerplate for .Net Dependency Injection for XAML/WPF UserControls/Pages/Windows injection
+
+-------------------
+
+### CommunityToolkit.Mvvm
 
 ViewModel properties for binding are annotated with the ObservableProperty attribute, generating appropriate code for the property to use for Binding from XAML views.  RelayCommands are used on functions required for Binding from XAML views, CanExecute is employed to restrict access to controls to suit project brief.
 
